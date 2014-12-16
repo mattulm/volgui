@@ -1,0 +1,6 @@
+[HKEY_LOCAL_MACHINE\SOFTWARE\Widcomm\BTConfig\Devices\....]
+
+
+Personal Area Network Service Artifacts
+HKEY_LOCAL_MACHINE\SOFTWARE\Widcomm
+[HKEY_LOCAL_MACHINE\SOFTWARE\Widcomm\BTConfig\Applications\0001]

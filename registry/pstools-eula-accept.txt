@@ -1,0 +1,12 @@
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsExec\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsFile\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsGetSID\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsInfo\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsKill\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsList\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsLoggedOn\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsLogList\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsPasswd\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsService\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsShutDown\EulaAccepted
+\registry\users\S-1-5-1234567890-1234567890-123456789-1000\Software\SysInternals\PsSuspend\EulaAccepted

@@ -1,0 +1,66 @@
+#!/usr/bin/perl
+
+# Simple script to submit files to Anubis sandbox
+# Written by: Jeremy Conway
+# Email: jeremy [at] sudosecure [dot] net
+# Date: 1 April 2008
+# Modified 4 Nov 2008
+# 	Modified the URL and POST data fields to reflect Anubis sandbox changes
+
+use HTTP::Request::Common;
+require LWP::UserAgent;
+use Getopt::Long;
+
+my $ua = LWP::UserAgent->new;
+$ua->timeout(10);
+$ua->agent('Anubis Submitter (http://sudosecure.net)');
+push @{ $ua->requests_redirectable }, 'POST';
+
+sub post_file{
+	my $badfile=$_;
+	my $res = $ua->request(POST 'http://analysis.seclab.tuwien.ac.at/submit.php',
+			Content_Type => 'form-data',
+			Content      => [	analysisType => 'file',
+							notification => 'email', 
+							email  =>  $email,
+	                  		executable   => ["$badfile"],
+	                		]);
+	if ($res->is_success) {
+		print $badfile . ": is being analyzied.  Check your email at $email for the report link.\n";
+	}
+	else {
+	    if ($res->status_line eq "302 Found"){
+				print $badfile . ": is being analyized. Check your email at $email for the report link.\n";
+		} else {
+			print $badfile . ": " . $res->status_line, "\n";
+		}	
+	}
+}
+
+GetOptions( 'e=s' => \$email_flag,
+		'f=s{,}' => \@files,
+		'h' => \$help ) ;
+
+if($help or !$email_flag or !@files){
+		print "Usage: anubis_submit.pl -e [email_address] -f [FILES]\n";
+		print "Submit files to Anubis Sandbox.\n";
+		print "Example: ./anubis_submit.pl -e my.email\@home.com -f file file1 file2\n";
+		print "\n\n  -e		EMAIL Address (required)";
+		print "  \n  -f		File or files to submit";
+		print "	 \n  -h		Show usage\n\n";
+		print "Wildcard * can be used in the file option \"-f\"\n";
+		print "Report bugs to jeremy [at] sudosecure [dot] net\n";
+		exit;
+}	
+
+$email = $email_flag;
+
+foreach (@files) {
+	my $badfile= $_;
+	if (-r $badfile){
+			post_file $badfile;
+	} 
+	else {
+			print $badfile . " does not exist\n";
+	}
+}

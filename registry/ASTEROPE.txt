@@ -1,0 +1,150 @@
+			ASTEROPE
+				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TooltipShadow "DefaultApplied"
+					Type: REG_DWORD
+					Data: 65, 00, 00, 00
+
+				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TooltipShadow "DefaultValue"
+					Type: REG_DWORD
+					Data: 01, 00, 00, 00
+
+				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects\TooltipShadow "D4cwdOGlwGHFyivmulWE2QX-8"
+					Type: REG_BINARY
+					Data: (data too large: 73728 bytes)
+			
+				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer "Run"
+					Type: REG_SZ
+					Data: "C:\Documents and Settings\[User Name]\Application Data\Microsoft\Windows\forcedos.exe"
+
+				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run "forcedos"
+					Type: REG_SZ
+					Data: "C:\Documents and Settings\[User Name]\Application Data\Microsoft\Windows\forcedos.exe"
+
+				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce "forcedos"
+					Type: REG_SZ
+					Data: "C:\Documents and Settings\[User Name]\Application Data\Microsoft\Windows\forcedos.exe"
+
+				HKEY_CURRENT_USER\Control Panel\Desktop "SCRNSAVE.EXE"
+					Type: REG_SZ
+					Data: "C:\Documents and Settings\[User Name]\Application Data\Microsoft\Windows\forcedos.exe"
+			
+				HKEY_CURRENT_USER\Software\Microsoft\Command Processor "AutoRun"
+Type: REG_SZ
+Data: "C:\Documents and Settings\[User Name]\Application Data\Microsoft\Windows\forcedos.exe"
+			
+	HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\0 "2500"
+Type: REG_DWORD
+Data: 03, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\2 "2500"
+Type: REG_DWORD
+Data: 03, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3 "2500"
+Type: REG_DWORD
+Data: 03, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "2500"
+Type: REG_DWORD
+Data: 03, 00, 00, 00
+
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1400"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1402"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1601"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 01, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A02"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A03"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A05"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A06"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\2 "1A05"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 01, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3 "1A05"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 01, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3 "2500"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 00, 00, 00, 00
+New data: 03, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1400"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1402"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1601"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 01, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A02"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A03"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A05"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "1A06"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 03, 00, 00, 00
+New data: 00, 00, 00, 00
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4 "2500"
+Old type: REG_DWORD
+New type: REG_DWORD
+Old data: 00, 00, 00, 00
+New data: 03, 00, 00, 00	
+
+
+
+HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION "wscntfy.exe"
+Type: REG_DWORD
+Data: 40, 1F, 00, 00
+
+
+HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_GPU_RENDERING "wscntfy.exe"
+Type: REG_DWORD
+Data: 01, 00, 00, 00
+
+

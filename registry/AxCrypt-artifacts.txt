@@ -1,0 +1,45 @@
+HKLM\SOFTWARE\Classes\*\shellex\ContextMenuHandlers\axcrypt.File
+HKLM\SOFTWARE\Classes\CLSID\{C3DFC144-30F8-4138-81F9-578DBEB9324A}
+HKLM\SOFTWARE\Classes\CLSID\{C3DFC144-30F8-4138-81F9-578DBEB9324A}\InprocServer32
+HKLM\SOFTWARE\Classes\Folder\shellex\ContextMenuHandlers\axcrypt.File
+HKLM\SOFTWARE\Classes\Installer\UpgradeCodes\87A9C44140AFC0B46B4FF660E3C886D5
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UpgradeCodes\87A9C44140AFC0B46B4FF660E3C886D5
+KLM\SOFTWARE\Classes\.axx
+HKLM\SOFTWARE\Classes\axcrypt.File
+HKLM\SOFTWARE\Classes\axcrypt.File\CLSID
+HKLM\SOFTWARE\Classes\axcrypt.File\DefaultIcon
+HKLM\SOFTWARE\Classes\axcrypt.File\shell
+HKLM\SOFTWARE\Classes\axcrypt.File\shell\open
+HKLM\SOFTWARE\Classes\axcrypt.File\shell\open\command
+HKLM\SOFTWARE\Classes\axcrypt.File\shellex
+HKLM\SOFTWARE\Classes\axcrypt.File\shellex\PropertySheetHandlers
+HKLM\SOFTWARE\Classes\axcrypt.File\shellex\PropertySheetHandlers\{C3DFC144-30F8-4138-81F9-578DBEB9324A}
+HKLM\SOFTWARE\Axantum
+HKLM\SOFTWARE\Axantum\AxCrypt
+HKU\[USERSID]\Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder\Start Menu\Programs\Axantum AxCrypt
+HKU\[USERSID]\Software\Axantum
+HKU\[USERSID]\Software\Axantum\AxCrypt
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{38350E9E-D50E-454A-BAFC-58BBDDBE08C4}\DisplayName: “AxCrypt 1.7.2976.0?
+HKLM\SOFTWARE\Axantum\AxCrypt\FileExtension: “.axx”
+HKLM\SOFTWARE\Axantum\AxCrypt\ProductName: “AxCrypt”
+HKLM\SOFTWARE\Axantum\AxCrypt\CLSID: “{C3DFC144-30F8-4138-81F9-578DBEB9324A}”
+HKLM\SOFTWARE\Axantum\AxCrypt\ShowActivationMenu: 0×00000000
+HKLM\SOFTWARE\Axantum\AxCrypt\KeyWrapIterations: 0x00003A98
+HKLM\SOFTWARE\Axantum\AxCrypt\AllowPrograms: 0×00000000
+HKLM\SOFTWARE\Axantum\AxCrypt\DisableSaveEncryptionKey: 0×00000000
+HKLM\SOFTWARE\Axantum\AxCrypt\DisableSaveDecryptionKey: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\installed: 0×00000001
+HKU\[USERSID]\Software\Axantum\AxCrypt\CompressThreshold: 0×00000014
+HKU\[USERSID]\Software\Axantum\AxCrypt\ServerMode: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\ServerErrorShellCmd: “”
+HKU\[USERSID]\Software\Axantum\AxCrypt\EventLogLevel: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\NoShowUnsafeWipeWarn: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\SaveEncKey: 0×00000001
+HKU\[USERSID]\Software\Axantum\AxCrypt\SaveDecKey: 0×00000001
+HKU\[USERSID]\Software\Axantum\AxCrypt\NoDecryptMenu: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\DisableRenameMenu: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\TryBrokenFile: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\AllowAnyExtension: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\FastModeDefault: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\KeepTimeStamp: 0×00000000
+HKU\[USERSID]\Software\Axantum\AxCrypt\AllowPrograms: 0×00000000

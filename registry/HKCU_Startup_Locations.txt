@@ -1,0 +1,44 @@
+These registry key locations were copied directly out of the Everything tab in
+SysInternals' Autoruns on a Windows XP SP3 system:
+
+\HKCU\Software\Policies\Microsoft\Windows\System\Scripts\Logoff
+\HKCU\Software\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Startup
+\HKCU\Software\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Shutdown
+\HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System\Shell
+\HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell
+\HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows\Load
+\HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows\Run
+\HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+\HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+\HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+\HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Runonce
+\HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\RunonceEx
+\HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Run
+\HKCU\SOFTWARE\Classes\Protocols\Filter
+\HKCU\SOFTWARE\Classes\Protocols\Handler
+\HKCU\SOFTWARE\Microsoft\Internet Explorer\Desktop\Components
+\HKCU\SOFTWARE\Microsoft\Active Setup\Installed Components
+\HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ShellServiceObjectDelayLoad
+\HKCU\Software\Classes\*\ShellEx\ContextMenuHandlers
+\HKCU\Software\Classes\AllFileSystemObjects\ShellEx\ContextMenuHandlers
+\HKCU\Software\Classes\Directory\ShellEx\ContextMenuHandlers
+\HKCU\Software\Classes\Directory\Shellex\DragDropHandlers
+\HKCU\Software\Classes\Directory\Shellex\PropertySheetHandlers
+\HKCU\Software\Classes\Directory\Shellex\CopyHookHandlers
+\HKCU\Software\Classes\Folder\Shellex\ColumnHandlers
+\HKCU\Software\Classes\Folder\ShellEx\ContextMenuHandlers
+\HKCU\Software\Classes\Directory\Background\ShellEx\ContextMenuHandlers
+\HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers
+\HKCU\Software\Microsoft\Ctf\LangBarAddin
+\HKCU\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved
+\HKCU\Software\Microsoft\Internet Explorer\UrlSearchHooks
+\HKCU\Software\Microsoft\Internet Explorer\Explorer Bars
+\HKCU\Software\Microsoft\Internet Explorer\Extensions
+\HKCU\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+\HKCU\Software\Classes\Filter
+\HKCU\Software\Microsoft\Command Processor\Autorun
+\HKCU\SOFTWARE\Classes\Exefile\Shell\Open\Command\(Default)
+\HKCU\Software\Classes\.exe
+\HKCU\Software\Classes\.cmd
+\HKCU\SOFTWARE\Policies\Microsoft\Windows\Control Panel\Desktop\Scrnsave.exe
+\HKCU\Control Panel\Desktop\Scrnsave.exe

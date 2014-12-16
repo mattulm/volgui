@@ -1,0 +1,6 @@
+RDIR="/home/sansforensics"
+HOME="/home/sansforensics/Desktop/cases"
+PRFL = profile to sue during investigation
+CASE = Name of the case. 
+	Also name of the folder containing the memroy sampple.
+APIK = Virus Total API Key

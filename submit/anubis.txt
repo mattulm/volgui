@@ -1,0 +1,66 @@
+#!/usr/bin/perl -w 
+
+use HTTP::Request::Common;
+use LWP::UserAgent;
+
+my $email = '  ';
+my $tracking_file = 'md5.txt';
+@files = `find /media/sdb1/exe/malware/ -size -5M -type f`;
+
+my $ua = LWP::UserAgent->new;
+$ua->timeout(10);
+$ua->agent('a-new-bis');
+push @{ $ua->requests_redirectable }, 'POST';
+
+sub post_file{
+	my $res = $ua->request(POST 'http://anubis.iseclab.org/index.php?action=analyze',
+			Content_Type => 'form-data',
+			Content      => [analysisType => 'file',
+					 notification => 'email', 
+					 email  =>  $email,
+	                  		 executable   => ["$badfile"],
+	                		]);
+}
+foreach $file (@files){
+	chomp;
+#   	$badfile = $_;
+	my $md5 = calcMD5 ($badfile);
+	my $type = `file "$file"`;
+	chomp($type);
+	if ( $type =~ m/executable/i ) {
+		post_file ($badfile);
+		storeMD5  ($md5);
+	  	print "\t -> Uploaded to Anubis Check email to find results for $badfile\n";
+	} 
+} 
+	
+
+
+sub calcMD5 {
+ my $file = shift;
+ my $md5 = `md5sum -b "$file"`;
+ if ( $md5 =~ m/^([0-9A-F]+)\s+/i) {
+  return $1;
+ } else {
+  print "Cannot calculate md5sum of $file \n";
+  exit;
+ }
+}
+
+sub checkMD5 {
+ my $md5 = shift;
+ open (FILE,"< $tracking_file") or die("cannot open $tracking_file");
+ foreach my $line ( <FILE> ) {
+  if ( $line =~ m/$md5/i ) {
+   return 1;
+  }
+ }
+ return 0;
+}
+sub storeMD5 {
+        my $md5 = shift;
+        open (FILE,">> $tracking_file") or die("cannot open $tracking_file");
+        print FILE $md5."\n";
+        close FILE;
+}
+

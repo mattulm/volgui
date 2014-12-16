@@ -1,0 +1,9 @@
+DLL Injection is very common
+	VirtualAllocEx()
+	CreateRemoteThread()
+	SetWindowsHookEx()
+	
+Process Hollowing:
+	malware starts a new instance of a legitimate process
+	Original process code is de-allocated and replaced.
+	Retains DLLs, handles, data, etc. from the original process.	

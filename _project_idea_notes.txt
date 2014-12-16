@@ -1,0 +1,150 @@
+﻿	2. Run Process Commands
+		# A. PSLIST
+			4. look for processes for Time Asynchronous Events.	
+		F. envars
+			1. run envars and compare the file lengths.
+		C. compare 2 or multiple processes
+			iv. parse those PIDs from the file and compare file size of the executables
+		D. Compare files sizes.
+			Show those that are lower than ......?
+		E. Strings Searches.
+			1. Create strings of all executables.
+				for example: strings files_pexedmp/executable.4320.exe >> files_pexedmp/executable.4320.exe.strings
+			4. Compression:
+				'Zip|ZIP|zip|tar|gz|rar|tgz'				
+					SSDT
+						egrep -v 'win32k.sys|ntoskrnl.exe'
+					
+	4.	Netwrk Connections and Settings
+			A. Settings
+				i. interfaces, settings, addresses, 
+					a. was the interface in promiscouous mdoe ?
+			B. Connections
+				ii. Active, Closed, History?
+			C. Cache
+				iii. arp cache, dns cache, browser cache, local user temp
+				
+				
+x. DLL Dumps
+		a. Take MD5s of each dumped DLL and submit that to VirusTotal.com or other submission sites.
+	5. Malfind
+	6. LDR Modules
+	7. Mutant Scan
+	8. File Scan
+	9. VAD Dumps
+
+	
+	
+XI. Registry Dumps
+	i. Pull Browser Helper Objects from Memory
+		a. pull the BHO key from the registry first: {printkey -K 'Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects'}
+		b. Resolve the full path by querying the registry again:
+				{printkey -K 'Classes\CLSID\{00009E9F-DDD7-AA59-AA7D-AA4B7D6BE000}\InprocServer32'} - (example)
+		c. at this point you can dump the specific DLLs and investigate them further.
+	
+		Some Persistence Mechanisms:
+			HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+			HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\Explorer\Run
+			HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run 
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Runonce
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Run
+			HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+			HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run
+			HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+			HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\RunOnce
+			HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+			HKLM\Software\Microsoft\Windows\CurrentVersion\RunServices
+			HKLM\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+			HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows\Run
+			HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+			HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+			HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+			HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Runonce
+			HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Run
+			HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
+			HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
+			HKCU\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Run
+			HKCU\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+			HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows
+			HKLM\System\CurrentControlSet00#\Services
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Taskman
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\System
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify
+			HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList
+			HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components
+			HKLM\SOFTWARE\Wow6432Node\Microsoft\Active Setup\Installed Components
+			HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellExecuteHooks
+			HKLM\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\ShellExecuteHooks
+			HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects
+			HKLM\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects
+			HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+			HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Drivers32
+			HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options
+			HKLM\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Image File Execution Options
+			HKLM\SOFTWARE\Classes\Exefile\Shell\Open\Command\(Default)
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\Appinit_Dlls
+			HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\Appinit_Dlls
+			HKLM\SOFTWARE\Microsoft\SchedulingAgent
+			HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved
+			HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SvcHost
+			HKLM\System\CurrentControlSet00#\Control\Session Manager\AppCertDlls
+			HKLM\SYSTEM\CurrentControlSet00#\Control\SecurityProviders\SecurityProviders
+			HKLM\SYSTEM\CurrentControlSet00#\Control\Lsa\Authentication Packages
+			HKLM\SYSTEM\CurrentControlSet00#\Control\Lsa\Notification Packages
+			HKLM\SYSTEM\CurrentControlSet00#\Control\Lsa\Security Packages
+			HKLM\SYSTEM\ControlSet00#\Control\Session Manager\CWDIllegalInDllSearch
+			HKLM\SYSTEM\ControlSet00#\Control\SafeBoot
+			HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell
+			HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows\Load
+			HKCU\Software\Microsoft\Command Processor\Autorun
+			HKCU\Classes\Exefile\Shell\Open\Command\(Default)
+
+	
+			
+			HKEY_CURRENT_USER\Software\Microsoft\Windows\Currentversion\Explorer\Userassist
+				HKCU\Software\Microsoft\Windows\Currentversion\Explorer\Userassist\{GUID}\Count
+
+			HKCU\Local Settings\MuiCache
+	
+			Ensures that hidden files are not shown in Explorer
+				Microsoft\Windows\CurrentVersion\Explorer\Advanced\Folder\Hidden\SHOWALL
+			
+			Check AutoPLay:
+				Software\Microsoft\Windows\CurrentVersion\Policies\Explorer
+			
+			Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects
+				
+			
+	
+			
+			
+			
+Module Ideas
+
+1. 
+A. Run process export with proc-exe
+B. Run process export with -u
+
+			
+	Can do searches here as well: http://oc.gtisc.gatech.edu:8080/search.cgi?search=
+	Just cat on the hash at the end of the URL.
+		We can 'wget' all of the files, and then parse out any that are of different sizes, 
+		those become what will be presented to the analyst.s
+		
+4. 
+Run strings on files.
+Output
+Record date command runs.
+Record Case Name
+Strngs
+
+5. [ strings compare ]
+Grep for web,
+Grep for network.
+Grep for .......
+    First find location.
+    Find line number
+    Find 20 lines ahead (configurable)
+    Find 20 lines below. (Configurable)

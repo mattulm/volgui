@@ -1,0 +1,52 @@
+PROCESS
+dlldump
+vaddump
+malfind
+handles
+memdump
+
+
+LISTS
+pslist
+pstree
+psscan
+psxview
+dlllist
+enumfunc
+envars
+
+
+SCANS
+thrdscan
+svcscan
+cmdscan
+consoles
+driverscan
+filescan
+mutantscan
+modscan
+
+
+
+
+
+#/bin/bash
+#
+# This scrip is designed to do the basic inistial investigation for a memory image.
+# By: Matthew Ulm
+# Date: Auguest 8, 2014
+#
+### Set some variables
+##########################
+RDIR="/home/sansforensics";
+HOME="/cases";
+VOL="vol.py";
+DSVT="/home/sansforensics/volgui/tools/dsvtsearch.py";
+GTEC="gtechrepo";
+VTSH="vt";
+THSH="totalhash";
+HEADER="Accept: text/html"
+UA21="Mozilla/5.0 Gecko/20100101 Firefox/21.0"
+UA22="Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.13; ) Gecko/20101203"
+TODAY=$(date +"%Y-%m-%d")
+FTIME="$(date)"

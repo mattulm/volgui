@@ -1,0 +1,58 @@
+#!/usr/bin/perl
+
+# Simple script to submit files to Threat Expert sandbox
+# Written by: Jeremy Conway
+# Email: jeremy [at] sudosecure [dot] net
+# Date: 30 March 2008
+
+use HTTP::Request::Common;
+require LWP::UserAgent;
+use Getopt::Long;
+
+my $ua = LWP::UserAgent->new;
+$ua->timeout(10);
+$ua->agent('Threat Expert Submitter (http://sudosecure.net)');
+
+
+sub post_file{
+	my $badfile=$_;
+	my $res = $ua->request(POST 'http://www.threatexpert.com/client_submission.aspx',
+			Content_Type => 'form-data',
+			Content      => [ email  => 'mailto:' . $email,
+	                  		tems_submission   => ["$badfile"],
+	                		]);
+	if ($res->is_success) {
+		print $badfile . ": " . $res->content, "\n";
+	}
+	else {
+	    print $badfile . ": " . $res->status, "\n";
+	}
+}
+
+GetOptions( 'e=s' => \$email_flag,
+		'f=s{,}' => \@files,
+		'h' => \$help ) ;
+
+if($help or !$email_flag or !@files){
+		print "Usage: threatExpert_submit.pl -e [email_address] -f [FILES]\n";
+		print "Submit files to Threat Expert Sandbox.\n";
+		print "Example: ./threatExpert_submit.pl -e my.email\@home.com -f file file1 file2\n";
+		print "\n\n  -e		EMAIL Address (required)";
+		print "  \n  -f		File or files to submit";
+		print "	 \n  -h		Show usage\n\n";
+		print "Wildcard * can be used in the file option \"-f\"\n";
+		print "Report bugs to jeremy [at] sudosecure [dot] net\n";
+		exit;
+}	
+
+$email = $email_flag;
+
+foreach (@files) {
+	my $badfile= $_;
+	if (-r $badfile){
+			post_file $badfile;
+	} 
+	else {
+			print $badfile . " does not exist\n";
+	}
+}

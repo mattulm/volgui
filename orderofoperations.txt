@@ -1,0 +1,11 @@
+1. Identify strange rogue processes
+2. review DLLs and handles
+	Digital signatures and LFO helpful
+3. Look for evidence of code injection
+4. Review network connections/ ports
+5. Check for signs of "hooking"
+6. Dump suspicious processes, dlls, drivers, etc. 
+	review strings
+	submit to VT?
+	reverse engineer
+	

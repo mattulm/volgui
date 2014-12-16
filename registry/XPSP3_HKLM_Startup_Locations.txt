@@ -1,0 +1,79 @@
+These registry key locations were copied directly out of the Everything tab in
+SysInternals' Autoruns on a Windows XP SP3 system:
+
+\HKLM\System\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\StartupPrograms
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\AppSetup
+\HKLM\Software\Policies\Microsoft\Windows\System\Scripts\Startup
+\HKLM\Software\Policies\Microsoft\Windows\System\Scripts\Logon
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit
+\HKLM\Software\Policies\Microsoft\Windows\System\Scripts\Shutdown
+\HKLM\Software\Policies\Microsoft\Windows\System\Scripts\Logoff
+\HKLM\Software\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Startup
+\HKLM\Software\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Shutdown
+\HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\Shell
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Taskman
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Runonce
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\RunonceEx
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Terminal Server\Install\Software\Microsoft\Windows\CurrentVersion\Run
+\HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+\HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx
+\HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+\HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+\HKLM\SOFTWARE\Classes\Protocols\Filter
+\HKLM\SOFTWARE\Classes\Protocols\Handler
+\HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components
+\HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\SharedTaskScheduler
+\HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\ShellServiceObjectDelayLoad
+\HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellExecuteHooks
+\HKLM\Software\Classes\*\ShellEx\ContextMenuHandlers
+\HKLM\Software\Classes\AllFileSystemObjects\ShellEx\ContextMenuHandlers
+\HKLM\Software\Classes\Directory\ShellEx\ContextMenuHandlers
+\HKLM\Software\Classes\Directory\Shellex\DragDropHandlers
+\HKLM\Software\Classes\Directory\Shellex\PropertySheetHandlers
+\HKLM\Software\Classes\Directory\Shellex\CopyHookHandlers
+\HKLM\Software\Classes\Folder\Shellex\ColumnHandlers
+\HKLM\Software\Classes\Folder\ShellEx\ContextMenuHandlers
+\HKLM\Software\Classes\Directory\Background\ShellEx\ContextMenuHandlers
+\HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers
+\HKLM\Software\Microsoft\Ctf\LangBarAddin
+\HKLM\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved
+\HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects
+\HKLM\Software\Microsoft\Internet Explorer\Toolbar
+\HKLM\Software\Microsoft\Internet Explorer\Explorer Bars
+\HKLM\Software\Microsoft\Internet Explorer\Extensions
+\HKLM\System\CurrentControlSet\Services
+\HKLM\Software\Microsoft\Windows NT\CurrentVersion\Drivers32
+\HKLM\Software\Classes\Filter
+\HKLM\Software\Classes\CLSID\{083863F1-70DE-11d0-BD40-00A0C911CE86}\Instance
+\HKLM\Software\Classes\CLSID\{AC757296-3522-4E11-9862-C17BE5A1767E}\Instance
+\HKLM\Software\Classes\CLSID\{7ED96837-96F0-4812-B211-F13C24117ED3}\Instance
+\HKLM\Software\Classes\CLSID\{ABE3B9A4-257D-4B97-BD1A-294AF496222E}\Instance
+\HKLM\System\CurrentControlSet\Control\Session Manager\BootExecute
+\HKLM\System\CurrentControlSet\Control\Session Manager\SetupExecute
+\HKLM\System\CurrentControlSet\Control\Session Manager\Execute
+\HKLM\System\CurrentControlSet\Control\Session Manager\S0InitialCommand
+\HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options
+\HKLM\Software\Microsoft\Command Processor\Autorun
+\HKLM\SOFTWARE\Classes\Exefile\Shell\Open\Command\(Default)
+\HKLM\Software\Classes\.exe
+\HKLM\Software\Classes\.cmd
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\Appinit_Dlls
+\HKLM\System\CurrentControlSet\Control\Session Manager\KnownDlls
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\ServiceControllerStart
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\LsaStart
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\System
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\UIHost
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\GinaDLL
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Taskman
+\HKLM\System\CurrentControlSet\Control\BootVerificationProgram\ImagePath
+\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SaveDumpStart
+\HKLM\System\CurrentControlSet\Services\WinSock2\Parameters\Protocol_Catalog9\Catalog_Entries
+\HKLM\System\CurrentControlSet\Services\WinSock2\Parameters\NameSpace_Catalog5\Catalog_Entries
+\HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors
+\HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SecurityProviders
+\HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Authentication Packages
+\HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Notification Packages
+\HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages
+\HKLM\SYSTEM\CurrentControlSet\Control\NetworkProvider\Order

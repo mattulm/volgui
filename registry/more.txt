@@ -1,0 +1,57 @@
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Svchost
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\servicename
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\servicename\Parameters\\ServiceDll
+HKEY_LOCAL_MACHINE\SYSTEM
+HKEY_LOCAL_MACHINE\SYSTEM\Select
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\pnpsvc\
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\pnpsvc\
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Enum\Root
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Enum\Root
+Root Key: HKEY_LOCAL_MACHINE
+Key: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon 
+A handful of Registry entries control the applications and services that run at 
+startup. It's useful to know where to find this list should you need to debug some problem 
+at startup. The following list of keys show you where the run information is stored:
+HKLM \SOFTWARE \Microsoft \Windows \CurrentVersion \Run
+HKLM \SOFTWARE \Microsoft \Windows \CurrentVersion \RunOnce
+HKCU \Software \Microsoft \Windows \CurrentVersion \Run
+HKCU \Software \Microsoft \Windows \CurrentVersion \Runonce” (Sanna, 2001)
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Active Setup\Installed 
+Components\Intelli Mouse Pro Version 2.0B\StubPath: "%WinDir% 
+\System32\splm\ncsjapi32.exe"© 2010 The SANS Institute As part of the Information Security Reading Room Author retains full rights.
+Key!fingerprint!=!AF19!FA27!2F94!998D!FDB5!DE3D!F8B5!06E4!A169!4E46
+Utilizing “AutoRuns” To Catch Malware 7
+Author Name, email@address
+•HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\
+RunOnce\*Intelli Mouse Pro Version 2.0B*: "%WinDir% \System32\splm\
+ncsjapi32.exe"
+•HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\
+Hidden: "2"
+•HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run\Intelli Mouse Pro 
+Version 2.0B: "%WinDir% \System32\splm\ncsjapi32.exe"
+•HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\RunOnce\*Intelli Mouse 
+Pro Version 2.0B*: "%WinDir% \System32\splm\ncsjapi32.exe"
+Name: W32/Conficker.worm (http://vil.nai.com/vil/content/v_153464.htm) 
+Type: Virus
+SubType: Worm
+Discovery Date: 11/24/2008
+Related autorun characteristics:
+When executed, the worm copies itself using a random name to the %Sysdir% folder.
+(Where %Sysdir% is the Windows system folder; e.g. C:\Windows\System32)
+It modifies the following registry key to create a randomly-named service on the affected 
+system:
+•HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\{random}\Paramete
+rs\"ServiceDll" = "Path to worm" 
+•HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\{random}\"ImageP
+ath" = %SystemRoot%\system32\svchost.exe -k netsvcs
+Name: Generic Rootkit.dt.dr (http://vil.nai.com/vil/content/v_241386.htm)
+Type: Trojan
+SubType: Dropper
+Discovery Date: 11/10/2009
+Related autorun characteristics:
+The malware then creates the following registry entries to ensure its execution as a 
+Windows service when the infected machine reboots:
+•HKEY_Local_Machine\System\CurrentControlSet\Services\zacypxeepnjv7
+ImagePath = "%System%\Drivers\[Random file name].sys"
+DisplayName = "[Random filename]"
