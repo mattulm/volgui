@@ -161,31 +161,43 @@ if [ -f "$HOME/$CASE/text/netscan.txt" ]; then
 	# Add this data to our log file.
 	echo "Number of unique external addresses from the netscan file. " >> $HOME/$CASE/evidence/$CASE.network.log;
 	wc -l ipv4.ext.txt >> $HOME/$CASE/evidence/$CASE.network.log;
-	echo "Here is the external IPv4 file" >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
+        echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo "Here is the external IPv4 file results.    " >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo "------------------------------------------ " >> $HOME/$CASE/evidence/$CASE.network.log;
 	cat ipv4.ext.txt >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
 	#
 	echo "Number of unique internal addresses from the netscan file. " >> $HOME/$CASE/evidence/$CASE.network.log;
 	wc -l ipv4.int.txt >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
+        echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
 	echo "Here is the Internal IPv4 file" >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo "--------------------------------- " >> $HOME/$CASE/evidence/$CASE.network.log;
 	cat ipv4.int.txt >> $HOME/$CASE/evidence/$CASE.network.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
+        echo " " >> $HOME/$CASE/evidence/$CASE.network.log;
 	echo " "; echo " "; 
 fi
 #
 # Let's search online for our external IPs
 if [ -f "$HOME/$CASE/text/ipfiles/ipv4.ext.txt" ]; then
 	cd $HOME/$CASE/text/ipfiles
-	mkdir vt vxv phn mcdb sow wt mu bs ipv;
+	mkdir vt vxv phn mcdb wis th mu;
 	while read x; do
 		wget --header="$HEADER" --user-agent="$UA20" "https://www.virustotal.com/en/ip-address/$x/information/" -O "vt/$x.html"
+
 		wget --header="$HEADER" --user-agent="$UA21" "http://vxvault.siri-urz.net/ViriList.php?IP=$x" -O "vxv/$x.html"
+
 		wget --header="$HEADER" --user-agent="$UA22" "http://www.projecthoneypot.org/ip_$x" -O "phn/$x.html"
+
 		wget --header="$HEADER" --user-agent="$UA20" "http://malc0de.com/database/index.php?search=$x" -O "mcdb/$x.html"
-		wget --header="$HEADER" --user-agent="$UA21" "http://spyonweb.com/$x" -O "sow/$x.html"
+
 		wget --header="$HEADER" --user-agent="$UA20" "http://who.is/whois-ip/ip-address/$x" -O "wis/$x.html"
-		wget --header="$HEADER" --user-agent="$UA22" "http://www.webutations.info/go/review/$x" -O "wt/$x.html"
-		wget --header="$HEADER" --user-agent="$UA21" "http://www.ipvoid.com/scan/$x" -O "ipv/$x.html"
+
                	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/network/ip:$x" -O "th/$x.html"
-               	wget --header="$HEADER" --user-agent="$UA22" "http://www.blockedservers.com/blocked/ipv4/$x/" -O "bs/$x.html"
+
                	wget --header="$HEADER" --user-agent="$UA21" "http://www.malwareurl.com/ns_listing.php?ip=$x" -O "mu/$x.html"
 
 		sleep 1;
@@ -238,6 +250,29 @@ echo "VX Vault Result Files to go through" >> $HOME/$CASE/evidence/$CASE.network
 ls *.html >> $HOME/$CASE/evidence/$CASE.network.log
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.network.log
 cp *.html $HOME/$CASE/evidence/ 2>/dev/null
+#
+# IP Void Files
+cd $HOME/$CASE/text/ipfiles/ipv;
+for i in *.html; do
+	if grep -i "<h1>Report not found</h1>" $i; then
+		rm -rf $i
+	fi
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
