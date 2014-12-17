@@ -51,3 +51,20 @@ rule embedded_win_api
     condition:
         not ($mz at 0) and any of ($api*)
 }
+
+rule exe_drop {
+	strings:
+		$a  = "This program cannot be run in DOS mode"
+	condition:
+		all of them
+}
+
+rule is_pe
+{
+    condition:
+        // MZ signature at offset 0 and ...
+        uint16(0) == 0x5A4D and 
+        // ... PE signature at offset stored in MZ header at 0x3C
+        uint32(uint32(0x3C)) == 0x00004550
+}
+

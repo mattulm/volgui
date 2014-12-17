@@ -2,12 +2,12 @@ rule Winsock__WSA : Sockets Winsock {
 	meta:
 		weight = 1
 	strings:
-		$ ="WSASocket"
-		$ ="WSASend"
-		$ ="WSARecv"
-		$ ="WSAConnect"
-		$ ="WSAIoctl"
-		$ ="WSAConnect"
+		$a ="WSASocket"
+		$b ="WSASend"
+		$c ="WSARecv"
+		$d ="WSAConnect"
+		$e ="WSAIoctl"
+		$f ="WSAConnect"
 	condition:
 		any of them
 }

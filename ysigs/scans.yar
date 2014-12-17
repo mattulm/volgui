@@ -23,7 +23,7 @@ include "scans/reads_clipboard.yar"
 include "scans/sandboxdetect.yar"
 include "scans/vmdetect.yar"
 include "scans/winsockets.yar"
-
+include "scans/Zip_With_Exe.yar"
 
 
 //
