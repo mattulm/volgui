@@ -142,5 +142,17 @@ rule WebCake {
 		$a1   
 }
 
+rule CloudScout {
+	strings:
+		$a1= "CloudScout"
+	condition:
+		$a1
+}
 
+rule freedealsapp {
+	strings:
+		$a1= "freedealsapp"
+	condition:
+		$a1
+}
 
