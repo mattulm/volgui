@@ -181,7 +181,7 @@ def Main():
     global VIRUSTOTAL_API2_KEY
 
     oParser = optparse.OptionParser(usage='usage: %prog [options] file\n' + __description__, version='%prog ' + __version__)
-    oParser.add_option('-d', '--delay', type=int, default=20, help='delay in seconds between queries (default 16s, VT rate limit is 4 queries per minute)')
+    oParser.add_option('-d', '--delay', type=int, default=22, help='delay in seconds between queries (default 16s, VT rate limit is 4 queries per minute)')
     oParser.add_option('-k', '--key', default='', help='VirusTotal API key')
     oParser.add_option('-f', '--file', help='File contains filenames to submit')
     oParser.add_option('-z', '--zip', action='store_true', default=False, help='Submit the ZIP file, not the content of the ZIP file')
