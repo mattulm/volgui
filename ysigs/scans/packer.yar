@@ -8978,19 +8978,6 @@ rule Dropper_Creator_V0dot1_Conflict_: Packer
     condition:
         any of them
 }
-rule dUP_v2dotx_Patcher_wwwdotdiablo2oo2dotcjbdotnet_: Packer
-{
-    meta:
-        name = "dUP v2.x Patcher --> www.diablo2oo2.cjb.net" // Packer name & version
-        source = "http://research.pandasecurity.com/blogs/images/userdb.txt" // Original data source
-        date_added = "2012/07/17"
- 
-    strings:
-        $1 = { 54 68 69 73 20 70 72 6F 67 72 61 6D 20 63 61 6E 6E 6F 74 20 62 65 20 72 75 6E 20 69 6E 20 44 4F 53 20 6D 6F }
-
-    condition:
-        any of them
-}
 rule dUP2_diablo2oo2_: Packer
 {
     meta:
@@ -10196,19 +10183,6 @@ rule Microsoft_Visual_Cplusplus_vxdotx_: Packer
 
     condition:
         for any of them : ($ at entrypoint)
-}
-rule Microsoft_Visual_Cplusplus_vxdotx_DLL_: Packer
-{
-    meta:
-        name = "Microsoft Visual C++ vx.x DLL" // Packer name & version
-        source = "http://research.pandasecurity.com/blogs/images/userdb.txt" // Original data source
-        date_added = "2012/07/17"
- 
-    strings:
-        $1 = { 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 ?? ?? ?? ?? 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 ?? ?? ?? 00 00 ?? ?? ?? 00 00 ?? ?? ?? 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 68 }
-
-    condition:
-        any of them
 }
 rule MingWin32_Dev_C_plusplus_v4dotx_h_: Packer
 {
@@ -38308,15 +38282,6 @@ rule UnconfirmedPDFexploit: decodedPDF
 	condition:
 		1 of them
 }
-rule DecodedGenericCLSID : decodedOnly
-{
-	meta:
-		impact = 0
-	strings:
-		$gen = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/ nocase
-	condition:
-		1 of them
-}
 rule MSOfficeSnapshotViewer
 {
 	meta:
@@ -38456,29 +38421,7 @@ rule DecodedIframe: decodedOnly
 	condition:
 		1 of them
 }
-/*
-rule ObfuscationPattern
-{ 
-	meta:
-		impact = 0
-	strings:
-		$eval = "eval" nocase fullword
-		$charcode = "String.fromCharCode" nocase fullword
-		$loc = "location" nocase fullword
-		$deanEdwards = "function(p,a,c,k,e,d)" nocase
-	condition:
-		2 of them
-}*/
-rule SuspicousBodyOnload
-{
-	meta:
-		impact = 6
-		hide = true
-	strings:
-		$body = /<body [^>]*onload\s*=\s*['"]*[a-z0-9]+\(['"][a-f0-9]{300}/
-	condition:
-		1 of them
-}
+w
 rule MSIENestedSpan
 {
 	meta:
@@ -38494,20 +38437,7 @@ rule MSIENestedSpan
 	condition:
 		all of them
 }
-/*
-rule ShellcodePattern
-{
-    meta:
-        impact = 1 //while testing
-        hide = true
-    strings:
-        $unescape = "unescape" fullword nocase
-        $shellcode = /%u[A-Fa-f0-9]{4}/ 
-        $shellcode5 = /(%u[A-Fa-f0-9]{4}){5}/
-    condition:
-        ($unescape and $shellcode) or $shellcode5
-}
-*/
+
 rule MSIEUseAfterFreePeersDll
 {
     meta:
@@ -38908,15 +38838,7 @@ rule _Guardant_Stealth_aka_Novex_Dongle_
 	condition:
 		$0 at entrypoint
 }
-rule _ASPack_v104b_
-{
-	meta:
-		description = "ASPack v1.04b"
-	strings:
-		$0 = {75 ??}
-	condition:
-		$0 at entrypoint
-}
+
 rule _Feokt_
 {
 	meta:
@@ -39143,15 +39065,7 @@ rule _VOB_ProtectCD_5_
 	condition:
 		$0 at entrypoint
 }
-rule _Macromedia_Windows_Flash_ProjectorPlayer_v60_
-{
-	meta:
-		description = "Macromedia Windows Flash Projector/Player v6.0"
-	strings:
-		$0 = {E9}
-	condition:
-		$0 at entrypoint
-}
+
 rule _PECompact_v098_
 {
 	meta:
@@ -39362,8 +39276,7 @@ rule _PECompact_v140b2__v140b4_
 	condition:
 		$0 at entrypoint
 }
-rule _PESHiELD_v02__v02b__v02b2_
-{
+rule _PESHiELD_v02__v02b__v02b2_ {
 	meta:
 		description = "PESHiELD v0.2 / v0.2b / v0.2b2"
 	strings:
@@ -40340,9 +40253,8 @@ rule _Anticrack_Software_Protector_v109_ACProtect_
 	strings:
 		$0 = {60 E8 01 ?? ?? ?? ?? ??}
 		$1 = {60 ?? ?? E8 01 ?? ?? ?? 83 04 24 06}
-		$2 = {90}
 	condition:
-		$0 at entrypoint or $1 at entrypoint or $2 at entrypoint
+		$0 at entrypoint or $1 at entrypoint
 }
 rule _PEEncrypt_v40b_JunkCode_
 {
@@ -40395,15 +40307,6 @@ rule _UPX_v103__v104_
 		description = "UPX v1.03 - v1.04"
 	strings:
 		$0 = {60 BE 8D BE C7 87 57 83 CD FF EB 0E 8A 06 46 88 07 47 01 DB 75 07}
-	condition:
-		$0 at entrypoint
-}
-rule _PE_Pack_v099_
-{
-	meta:
-		description = "PE Pack v0.99"
-	strings:
-		$0 = {74}
 	condition:
 		$0 at entrypoint
 }
@@ -41628,7 +41531,7 @@ rule _NeoLite_v10_
 		$0 = {8B 44 24 04 8D 54 24 FC 23 05 E8 FF 35 50 FF}
 		$1 = {E9}
 	condition:
-		$0 at entrypoint or $1 at entrypoint
+		$0 at entrypoint
 }
 rule _UPX_v062_
 {
