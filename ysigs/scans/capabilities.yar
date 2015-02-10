@@ -34,18 +34,6 @@ rule write_msr
     any of them
 }
 
-rule embedded_exe 
-{
-    meta:
-    description = "Detects embedded executables"
-    
-    strings:
-    $a = "This program cannot be run in DOS mode"
-    
-    condition:
-    $a in (1024..filesize)
-}
-
 rule vmdetection 
 {
     meta:
@@ -124,7 +112,7 @@ rule sniffer
     any of them
 }
 
-rule spam 
+rule spam_potential 
 {
     meta:
     description = "Indicates spam-related activity"
@@ -132,10 +120,6 @@ rule spam
     strings:
     $spam0000 = "invitation card" nocase
     $spam0002 = "shipping documents" nocase
-    $spam0003 = "e-cards@hallmark.com" nocase
-    $spam0004 = "invitations@twitter.com" nocase
-    $spam0005 = "invitations@hi5.com" nocase
-    $spam0006 = "order-update@amazon.com" nocase
     $spam0007 = "hallmark e-card" nocase
     $spam0008 = "invited you to twitter" nocase
     $spam0009 = "friend on hi5" nocase
