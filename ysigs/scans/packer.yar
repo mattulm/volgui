@@ -38421,7 +38421,7 @@ rule DecodedIframe: decodedOnly
 	condition:
 		1 of them
 }
-w
+
 rule MSIENestedSpan
 {
 	meta:
@@ -41529,7 +41529,6 @@ rule _NeoLite_v10_
 		description = "NeoLite v1.0"
 	strings:
 		$0 = {8B 44 24 04 8D 54 24 FC 23 05 E8 FF 35 50 FF}
-		$1 = {E9}
 	condition:
 		$0 at entrypoint
 }
