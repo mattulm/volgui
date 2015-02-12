@@ -1,0 +1,60 @@
+FILE=
+PROFILE=
+HOME=
+CASE=
+
+
+#
+cd /cases/wnyclt72179/dlldump
+while read i; 
+do 
+	mkdir $i; 
+	vol.py -f /cases/wnyclt72179/wnyclt72179.ram --profile=Win7SP1x86 dlldump -p $i -D /cases/wnyclt72179/dlldump/$i >> /cases/wnyclt72179/dlldump/$i/$i.list; 
+	cd /cases/wnyclt72179/dlldump/$i
+	file *.dll | grep -v data | cut -f 1 -d":" >> pe.file.list;
+	while read p; do
+		md5sum $p | awk '{print $1}' >> md5.full.list;
+		md5sum $p >> md5.name.full.list;
+	done < pe.file.list;
+	cat md5.full.list >> /cases/wnyclt72179/evidence/md5.dlldump.total.list;
+done < folder.list/cases/wnyclt72179/procexedump/malfind.injectedPE.list;
+#
+/cases/wnyclt72179/evidence/md5.dlldump.total.list | sort | uniq >> md5.dlldump.list;
+#
+#
+
+
+#
+cd $HOME/$CASE/vaddump;
+while read i; 
+do 
+	mkdir $i; 
+	vol.py -f $HOME/$CASE/$FILE --profile=$PROFILE vaddump -p $i -D $HOME/$CASE/vaddump/$i >> $HOME/$CASE/vaddump/$i/$i.list; 
+	cd $i;
+	file *.dmp | grep -v data | cut -f 1 -d":" >> pe.file.list
+	while read p; do
+		md5sum $p | awk '{print $1}' >> md5.full.list
+		md5sum $p >> md5.name.full.list
+	done < pe.file.list;
+	cat md5.full.list >> $HOME/$CASE/evidence/md5.vaddump.total.list
+done < /cases/wnyclt72179/procexedump/malfind.injectedPE.list
+#
+$HOME/$CASE/evidence/md5.vaddump.total.list | sort | uniq >> md5.vaddump.list
+#
+#
+
+
+#
+cd $HOME/$CASE/apihooks;
+while read i; 
+do 
+	mkdir $i; 
+	vol.py -f $HOME/$CASE/$FILE --profile=$PROFILE apihooks -p $i >> $HOME/$CASE/dlldump/$i/$i.list;
+done < /cases/wnyclt72179/procexedump/malfind.injectedPE.list
+#
+#
+
+
+
+
+
