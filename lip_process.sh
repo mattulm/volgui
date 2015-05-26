@@ -1,11 +1,12 @@
 #/bin/bash
 #
-# This scrip is designed to do the basic inistial investigation for a memory image.
+# This script is designed to do the basic initial investigation for a memory image.
 # By: Matthew Ulm
-# Date: Auguest 8, 2014
+# Date: May 25, 2015
 #
 # This script was built using the SIFT workstation 3.0
-# First it will hash the memory file, then dump pslist, pstree, psxview.
+# First it will hash the memory file with MD5 and SHA1.
+# then dump pslist, pstree, psxview.
 # It will then look at the svchost processes, and compare all of them together.
 # Then it attempts to dump the svchost processes using procexedump.
 # It will then MD5 hash those files, and compare them to some online engines.
@@ -20,8 +21,6 @@ DSUB="/home/sansforensics/volgui/tools/dsvtsubmit.py"
 ADMC="/home/sansforensics/volgui/tools/adobemc.py"
 HEADER="Accept: text/html"
 UA20="Mozilla/5.0 Gecko/20010527 Firefox/22.3"
-UA21="Mozilla/5.0 Gecko/20100114 Firefox/21.1"
-UA22="Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.13; ) Gecko/20101203"
 TODAY=$(date +"%Y-%m-%d")
 FTIME="$(date)"
 #
@@ -29,10 +28,9 @@ FTIME="$(date)"
 ### Get some information from the user.
 #######################################
 # 
-echo "Welcome to the Lazy Investigator Program. "
-echo " "
 echo "This particular script will look at the processes found within the memory file. "
-echo "First we will pull the process list, then dump the svchost processes. "
+echo "First we will pull the process list after hashing the memory image "
+echo "Then I will dump the svchost processes. "
 echo " "
 echo " "
 #
@@ -70,6 +68,8 @@ echo " "
 #
 ### Hash the memory file
 #########################
+# 
+# First the MD5 hash.
 echo "I am going to take some hashes of the memory now. "
 echo "The file being analyzed is: $FILE" >> $HOME/$CASE/evidence/$CASE.process.log
 echo "I will take an MD5 hash now";
@@ -78,16 +78,16 @@ md5sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
+# Now time for the SHA1 hash.
 echo "I will take a SHA1 hash now";
 echo "I will take a SHA1 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
 sha1sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
-#
-### Let's figure out what image we are working with.
-### Ask the user if they know what profile to use.
-### Find out for them if they do not know.
+# Let's figure out what image we are working with.
+# Ask the user if they know what profile to use.
+# Find out for them if they do not know.
 ###########################################################
 echo "One last bit of information is needed......"
 echo "Do you know what profile to use on this memory sample? (y/n):"
@@ -114,11 +114,10 @@ echo "Here is the profile being used: $PRFL" >> $HOME/$CASE/evidence/$CASE.proce
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
-#
 # Let's do our process scans to get started on our analysis
 ##############################################################
 cd $HOME/$CASE
-process=( pslist psxview pstree )
+process=( pslist psxview pstree psscan )
 for i in "${process[@]}"; do
 	if [ ! -f "text/$i.txt" ]; then
 		echo "$i module has been run at $(date), against the memory file."
@@ -135,10 +134,17 @@ echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
 # Looking for svchost with this section.
 cd $HOME/$CASE/text;
-cat pslist.txt | grep 0x | grep svchost | awk '{ print $3 }' > svchost.pids.list
-cat pslist.txt | grep 0x | grep svchost | awk '{ print $4 }' > svchost.parent.list
-cat pslist.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" > pslist.noaltiris.txt
-cat pstree.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" > pstree.noaltiris.txt
+cat pslist.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
+cat pslist.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.lists.working
+cat psscan.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
+cat psscan.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.lists.working
+cat svchost.pids.list.working | sort -u >> svchost.pids.list
+cat svchost.parent.lists.working | sort -u >> svchost.parent.lists
+rm -rf svchost.pids.list.working svchost.parent.lists.working
+#
+# Clean up some stuff from Altiris.
+cat pslist.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> pslist.noaltiris.txt
+cat pstree.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> pstree.noaltiris.txt
 #
 #
 SVCHC=($(wc -l svchost.pids.list))
@@ -150,6 +156,7 @@ cat svchost.pids.list; echo " "; echo " "; sleep 3;
 echo "Here are all of the svchost PIDSs " >> $HOME/$CASE/evidence/$CASE.process.log
 cat svchost.pids.list >> $HOME/$CASE/evidence/$CASE.process.log
 #
+# Work with the SVChost parent processes
 cat svchost.parent.list | sort | uniq > svchost.parent
 SVCPC=($(wc -l svchost.parent))
 echo "There ( is - are ) $SVCPC unique svchost parent processes"
