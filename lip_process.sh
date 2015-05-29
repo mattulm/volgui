@@ -145,19 +145,25 @@ rm -rf svchost.pids.list.working svchost.parent.lists.working
 # Clean up some stuff from Altiris.
 cat pslist.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> pslist.noaltiris.txt
 cat pstree.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> pstree.noaltiris.txt
+cat psscan.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> psscan.noaltiris.txt
+cat psxview.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> psxview.noaltiris.txt
 #
 #
+# Let's print information about the svchost processes found.
 SVCHC=($(wc -l svchost.pids.list))
 echo "There are $SVCHC svchost processes discovered within RAM."
 echo "There are $SVCHC svchost processes discovered within RAM." >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 echo "Here are all of the svchost PIDs ";
 cat svchost.pids.list; echo " "; echo " "; sleep 3;
+#
+# Now to the log file.
 echo "Here are all of the svchost PIDSs " >> $HOME/$CASE/evidence/$CASE.process.log
 cat svchost.pids.list >> $HOME/$CASE/evidence/$CASE.process.log
 #
+#
 # Work with the SVChost parent processes
-cat svchost.parent.list | sort | uniq > svchost.parent
+cat svchost.parent.list | sort -u  >> svchost.parent
 SVCPC=($(wc -l svchost.parent))
 echo "There ( is - are ) $SVCPC unique svchost parent processes"
 echo "There ( is - are ) $SVCPC unique svchost parent processes" >> $HOME/$CASE/evidence/$CASE.process.log
