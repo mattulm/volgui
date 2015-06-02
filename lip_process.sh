@@ -68,7 +68,7 @@ read APIK
 #
 # Check for some directories
 #
-setupdir=( text evidence procexedump )
+setupdir=( text evidence pdump )
 for i in "${setupdir[@]}"; do
 	if [ ! -d "$HOME/$CASE/$i" ]; then
 		mkdir -p $HOME/$CASE/$i
@@ -134,10 +134,10 @@ case $RESP in
 		echo "Stopping"
 		exit;;
 esac
-echo " "
-echo "This is the profile being used: $PRFL" >> $HOME/$CASE/evidence/$CASE.process.log
-echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";echo" ";
+echo " ";
+echo "This is the profile being used: $PRFL" >> $HOME/$CASE/evidence/$CASE.process.log;
+echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log;
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " "; echo " ";
 #
 #
 # Let's do our process scans to get started on our analysis
@@ -161,7 +161,9 @@ for i in "${process[@]}"; do
 done
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
-#
+####################################################################
+# SECTION 03
+#	Let's do some calculations here.
 # Looking for svchost with this section.
 cd $HOME/$CASE/text;
 cat pslist.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
@@ -179,14 +181,16 @@ cat pstree.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> 
 cat psscan.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> psscan.noaltiris.txt
 cat psxview.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> psxview.noaltiris.txt
 #
-#
+######################################################################
+# SECTION 04
+# 	Going after SVCHost Processes now.
 # Let's print information about the svchost processes found.
 SVCHC=($(wc -l svchost.pids.list))
 echo "There are $SVCHC svchost processes discovered within RAM."
 echo "There are $SVCHC svchost processes discovered within RAM." >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 echo "Here are all of the svchost PIDs ";
-cat svchost.pids.list; echo " "; echo " "; sleep 3;
+cat svchost.pids.list; echo " "; sleep 3;
 #
 # Now to the log file.
 echo "Here are all of the svchost PIDSs " >> $HOME/$CASE/evidence/$CASE.process.log
@@ -194,63 +198,63 @@ cat svchost.pids.list >> $HOME/$CASE/evidence/$CASE.process.log
 #
 #
 # Work with the SVChost parent processes
-cat svchost.parent.list | sort -u  >> svchost.parent
-SVCPC=($(wc -l svchost.parent))
+cat svchost.parent.full | sort -u  >> svchost.parent.list
+SVCPC=($(wc -l svchost.parent.list))
 echo "There ( is - are ) $SVCPC unique svchost parent processes"
 echo "There ( is - are ) $SVCPC unique svchost parent processes" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.log; echo " ";
-echo "Here is the svchost parent(s) processes.... ";
-cat svchost.parent; echo " "; echo " "; sleep 1;
-echo "Here is the svchost parent(s) processes.... "; >> $HOME/$CASE/evidence/$CASE.process.log
+#
+echo "Here ( is - are ) the svchost parent(s) processes.... ";
+cat svchost.parent; echo " "; echo " "; sleep 3;
+echo "Here ( is - are ) the svchost parent(s) processes.... "; >> $HOME/$CASE/evidence/$CASE.process.log
 cat svchost.parent >> $HOME/$CASE/evidence/$CASE.process.log
-echo "Here ( is - are ) the svchost parent(s) processes....." 
-echo "Here ( is - are )the svchost parent(s) processes.... " >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log
+echo " " >> $HOME/$CASE/evidence/$CASE.log;
+echo " " >> $HOME/$CASE/evidence/$CASE.log;
 #
-#
-# Trying to pull the memory offsets from a few of the process lists.
-# THe thought is to pull these, and use them to pull the executables seperately.
-# from teh PID file, as a means to check for process hallowing.
-cd $HOME/$CASE/text; mkdir svchost;
+######################################################################
+# SECTION 05
+#	Let's play with some processes
+# Let's dump some EXE's and play with them a bit.
+cd $HOME/$CASE/pdump; mkdir svchost;
 while read r; do
-	$VOL -f $HOME/$CASE/$FILE --profile=$PRFL procexedump -p $r -D svchost
+	$VOL -f $HOME/$CASE/$FILE --profile=$PRFL procdump -p $r -D svchost
 done < svchost.pids.list
 #
-cd svchost
+cd svchost;
 for i in *.exe; do
-	md5sum $i >> svchost.md5sum.list
+	md5sum $i >> svchost.md5.full
 done
-cat svchost.md5sum.list | cut -c 1-32 | sort | uniq >> svchost.md5
+cat svchost.md5.full | cut -c 1-32 | sort | uniq >> svchost.md5.list
 echo "Going to check these hashes online now. ";
 while read r; do
-	wget --header="$HEADER" --user-agent="$UA21" "http://vxvault.siri-urz.net/ViriList.php?MD5=$r" -O "$r.vxv.html"
+	wget --header="$HEADER" --user-agent="$UA20" "http://vxvault.siri-urz.net/ViriList.php?MD5=$r" -O "$r.vxv.html"
 	wget --header="$HEADER" --user-agent="$UA20" "http://www.threatexpert.com/report.aspx?md5=$r" -O "$r.te.html"
-	wget --header="$HEADER" --user-agent="$UA21" "http://totalhash.com/search/hash:$r" -O "$r.th.html"
-done < svchost.md5
-python $DSVT -k $APIK -f svchost.md5
-#
+	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "$r.th.html"
+done < svchost.md5.list
+python $DSVT -k $APIK -f svchost.md5.list;
+#####
+# TO DO:
 # Need to include some file parsing here so we can remove hashes that have no hits.
 #
 #
-ssdeep -b -a -p *.exe >> $HOME/$CASE/evidence/$CASE.process.log
-ssdeep -b -a -p *.exe
+ssdeep -b -a -p *.exe >> $HOME/$CASE/evidence/$CASE.process.svchost.log
+cat $HOME/$CASE/evidence/$CASE.process.svchost.log;
 echo " "; sleep 3; echo " ";
 #
 #
 for i in *.exe; do
-	echo "-----------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
-	file $i >> $HOME/$CASE/evidence/$CASE.process.log;
-	/usr/local/bin/pescan $i >> $HOME/$CASE/evidence/$CASE.process.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.process.log;
-	echo "Adobe Malware CLassifier....." >> $HOME/$CASE/evidence/$CASE.process.log;
-	python $ADMC -f $i -n 1 >> $HOME/$CASE/evidence/$CASE.process.log;
-	python $ADMC -f $i -n 2 >> $HOME/$CASE/evidence/$CASE.process.log;
-	python $ADMC -f $i -n 3 >> $HOME/$CASE/evidence/$CASE.process.log;
-	python $ADMC -f $i -n 4 >> $HOME/$CASE/evidence/$CASE.process.log;
-        python $ADMC -f $i >> $HOME/$CASE/evidence/$CASE.process.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.process.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.process.log;
+	echo "-----------------------------------" >> $HOME/$CASE/evidence/$CASE.process.svchost.log
+	file $i >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	# /usr/local/bin/pescan $i >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	# echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	echo "Adobe Malware CLassifier....." >> $HOME/$CASE/evidence/$CASE.process.schost.log;
+	python $ADMC -f $i -n 1 >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	python $ADMC -f $i -n 2 >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	python $ADMC -f $i -n 3 >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	python $ADMC -f $i -n 4 >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+        python $ADMC -f $i >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	strings -a -e l $i >> $i.strings
 	echo "----------" >> $i.strings; echo "----------" >> $i.strings;
 	strings -a -e b $i >> $i.strings;
