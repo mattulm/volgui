@@ -6,7 +6,7 @@
 #
 ### Set some variables
 ##########################
-RDIR="/home/sansforensics";
+USER="/home/sansforensics";
 HOME="/cases";
 VOL="vol.py";
 DSVT="/home/sansforensics/volgui/tools/dsvtsearch.py"

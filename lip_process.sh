@@ -13,7 +13,7 @@
 #
 ### Set some variables
 ##########################
-RDIR="/home/sansforensics";
+USER="/home/sansforensics";
 HOME="/cases";
 VOL="vol.py";
 DSVT="/home/sansforensics/volgui/tools/dsvtsearch.py"
@@ -30,13 +30,17 @@ FTIME="$(date)"
 # 
 echo "This particular script will look at the processes found within the memory file. "
 echo "First we will pull the process list after hashing the memory image "
-echo "Then I will dump the svchost processes. "
+echo "Then I will dump the svchost processes, and compare those to each other. "
 echo " "
 echo " "
 #
-# Get the case name.
+# SECTION 00
+# Get Information from the USER
+#
+# Get the case name from the user.
 echo "I need to get some information first... "
-echo "What is the case name? :"
+echo "What is the case name?"
+echo "For me this is the folder name in the cases folder.....:"
 read CASE
 if [ ! -d "$HOME/$CASE" ]; then
         echo "It does not look as if the case has been setup just yet.";
@@ -49,15 +53,21 @@ read FILE
 if [ ! -f "$HOME/$CASE/$FILE" ]; then
         echo "It does not look as if the file you gave me is in the right place.";
         echo "Please make sure the file is in this location. $HOME/$CASE ... ";
-        echo " "; sleep 1; exit;
+        echo " "; 
+	echo "Please check the file lcoation, and try the script again."
+	exit;
 fi
 echo " "
 echo "What is your Virus Total API Key "
 read APIK
 #
+#############################################################
+#
+# SECTION 01
+#	Administrative Setup and checks for the script
 #
 # Check for some directories
-##############################################################
+#
 setupdir=( text evidence procexedump )
 for i in "${setupdir[@]}"; do
 	if [ ! -d "$HOME/$CASE/$i" ]; then
@@ -66,14 +76,16 @@ for i in "${setupdir[@]}"; do
 done
 echo " "
 #
-### Hash the memory file
-#########################
+#
+# Hash the memory file
+echo "I am going to take some hashes of the memory now. ";
+echo "The file being analyzed is: $FILE ";
+echo "I will first take an MD5 hash now";
+echo "I am going to take some hashes of the memory now. " >> $HOME/$CASE/evidence/$CASE.process.log;
+echo "The file being analyzed is: $FILE" >> $HOME/$CASE/evidence/$CASE.process.log;
+echo "I will first take an MD5 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
 # 
-# First the MD5 hash.
-echo "I am going to take some hashes of the memory now. "
-echo "The file being analyzed is: $FILE" >> $HOME/$CASE/evidence/$CASE.process.log
-echo "I will take an MD5 hash now";
-echo "I will take an MD5 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
+# First the MD5
 md5sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
@@ -81,14 +93,27 @@ echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 # Now time for the SHA1 hash.
 echo "I will take a SHA1 hash now";
 echo "I will take a SHA1 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
+#
 sha1sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
+# Now time for the SHA256 hash.
+echo "I will take a SHA256 hash now";
+echo "I will take a SHA256 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
+sha256sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
+echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+#
+##################################################################
+#
+# SECTION 02
+#	First runs at the memory file.
+#
 # Let's figure out what image we are working with.
 # Ask the user if they know what profile to use.
 # Find out for them if they do not know.
-###########################################################
+#
 echo "One last bit of information is needed......"
 echo "Do you know what profile to use on this memory sample? (y/n):"
 read RESP
@@ -110,13 +135,17 @@ case $RESP in
 		exit;;
 esac
 echo " "
-echo "Here is the profile being used: $PRFL" >> $HOME/$CASE/evidence/$CASE.process.log
+echo "This is the profile being used: $PRFL" >> $HOME/$CASE/evidence/$CASE.process.log
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";echo" ";
+#
 #
 # Let's do our process scans to get started on our analysis
-##############################################################
+#
+# First move into our CASE directory
 cd $HOME/$CASE
+#
+# Set an array and loop please.
 process=( pslist psxview pstree psscan )
 for i in "${process[@]}"; do
 	if [ ! -f "text/$i.txt" ]; then
@@ -132,6 +161,7 @@ for i in "${process[@]}"; do
 done
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
+#
 # Looking for svchost with this section.
 cd $HOME/$CASE/text;
 cat pslist.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
@@ -141,6 +171,7 @@ cat psscan.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.lists.worki
 cat svchost.pids.list.working | sort -u >> svchost.pids.list
 cat svchost.parent.lists.working | sort -u >> svchost.parent.lists
 rm -rf svchost.pids.list.working svchost.parent.lists.working
+#
 #
 # Clean up some stuff from Altiris.
 cat pslist.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> pslist.noaltiris.txt
