@@ -247,7 +247,7 @@ while read r; do
 	sleep 4;
 	echo "Check with Total Hash.....";
 	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.chrome.log;
-	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
+	wget --no-check-certificate --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
 	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.md5.log;
 	sleep 5;
 	echo "Check with Malware DB ......";
