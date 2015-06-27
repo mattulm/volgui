@@ -173,9 +173,9 @@ rm -rf chrome.pids.list.working
 rm -rf chrome.parent.lists.working
 #
 # Let's print information about the chrome chromees found.
-SVCHC=($(wc -l chrome.pids.list))
-echo "There ( is - are ) $SVCHC chrome chrome(es) discovered within RAM."
-echo "There ( is - are ) $SVCHC chrome chrome(es) discovered within RAM." >> $HOME/$CASE/evidence/$CASE.chrome.log
+ChromePIDs=($(wc -l chrome.pids.list))
+echo "There were $ChromePIDs chrome process(es) discovered within RAM."
+echo "There were $ChromePIDs chrome process(es) discovered within RAM." >> $HOME/$CASE/evidence/$CASE.chrome.log
 echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo " ";
 echo "Here ( is - are ) all of the chrome PIDs ";
 cat chrome.pids.list; echo " "; sleep 3;   
@@ -186,9 +186,9 @@ cat chrome.pids.list >> $HOME/$CASE/evidence/$CASE.chrome.log
 #
 #
 # Work with the SVChost parent chromees
-SVCPC=($(wc -l chrome.parent.list))
-echo "There ( is - are ) $SVCPC unique chrome parent chrome(es) "
-echo "There ( is - are ) $SVCPC unique chrome parent chrome(es) " >> $HOME/$CASE/evidence/$CASE.chrome.log
+ChromePPIDs=($(wc -l chrome.parent.list))
+echo "There were $ChromePPIDs unique chrome parent chrome(es) "
+echo "There were $ChromePPIDs unique chrome parent chrome(es) " >> $HOME/$CASE/evidence/$CASE.chrome.log
 echo " " >> $HOME/$CASE/evidence/$CASE.log; echo " ";
 echo "Here ( is - are ) the chrome parent(s) chromees.... ";
 cat chrome.parent; echo " "; echo " "; sleep 3;
