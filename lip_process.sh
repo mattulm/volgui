@@ -79,29 +79,41 @@ echo " "
 #
 # Hash the memory file
 echo "I am going to take some hashes of the memory now. ";
-echo "The file being analyzed is: $FILE ";
-echo "I will first take an MD5 hash now";
 echo "I am going to take some hashes of the memory now. " >> $HOME/$CASE/evidence/$CASE.process.log;
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo "------------------------------------------------------------"
+echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
+echo "The file being analyzed is: $FILE ";
 echo "The file being analyzed is: $FILE" >> $HOME/$CASE/evidence/$CASE.process.log;
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo "------------------------------------------------------------"
+echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
+#
+# MD5 hash first
+echo "I will first take an MD5 hash now";
 echo "I will first take an MD5 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
-# 
-# First the MD5
 md5sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
+echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
 # Now time for the SHA1 hash.
 echo "I will take a SHA1 hash now";
 echo "I will take a SHA1 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
-#
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 sha1sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
+echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
 # Now time for the SHA256 hash.
 echo "I will take a SHA256 hash now";
 echo "I will take a SHA256 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 sha256sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
+echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
@@ -141,7 +153,6 @@ echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " "; echo " ";
 #
 #
 # Let's do our process scans to get started on our analysis
-#
 # First move into our CASE directory
 cd $HOME/$CASE
 #
@@ -151,8 +162,10 @@ for i in "${process[@]}"; do
 	if [ ! -f "text/$i.txt" ]; then
 		echo "$i module has been run at $(date), against the memory file."
                 echo "$i module has been run at $(date), against the memory file." >> $HOME/$CASE/evidence/$CASE.process.log
+		echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo "";
 		$VOL -f $FILE --profile=$PRFL $i > text/$i.txt
-		echo " "; sleep 1; echo "";
+		echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+		sleep 1;
 	else 
 		echo "It looks as if the $i module has already been run."
 		echo "I am skipping this step for now. "
@@ -171,65 +184,98 @@ cat pslist.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.lists.worki
 cat psscan.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
 cat psscan.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.lists.working
 cat svchost.pids.list.working | sort -u >> svchost.pids.list
-cat svchost.parent.lists.working | sort -u >> svchost.parent.lists
-rm -rf svchost.pids.list.working svchost.parent.lists.working
+cat svchost.parent.lists.working | sort -u >> svchost.parent.list
+rm -rf svchost.pids.list.working 
+rm -rf svchost.parent.lists.working
 #
-#
-# Clean up some stuff from Altiris.
-cat pslist.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> pslist.noaltiris.txt
-cat pstree.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> pstree.noaltiris.txt
-cat psscan.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> psscan.noaltiris.txt
-cat psxview.txt | grep -v DagentConfig | grep -v dagentui | grep -v "net.exe" >> psxview.noaltiris.txt
-#
-######################################################################
-# SECTION 04
-# 	Going after SVCHost Processes now.
 # Let's print information about the svchost processes found.
 SVCHC=($(wc -l svchost.pids.list))
-echo "There are $SVCHC svchost processes discovered within RAM."
-echo "There are $SVCHC svchost processes discovered within RAM." >> $HOME/$CASE/evidence/$CASE.process.log
+echo "There ( is - are ) $SVCHC svchost process(es) discovered within RAM."
+echo "There ( is - are ) $SVCHC svchost process(es) discovered within RAM." >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
-echo "Here are all of the svchost PIDs ";
-cat svchost.pids.list; echo " "; sleep 3;
-#
+echo "Here ( is - are ) all of the svchost PIDs ";
+cat svchost.pids.list; echo " "; sleep 3;   
+# The sleep is to give you some time to read it.
 # Now to the log file.
-echo "Here are all of the svchost PIDSs " >> $HOME/$CASE/evidence/$CASE.process.log
+echo "Here ( is - are ) all of the svchost PIDSs " >> $HOME/$CASE/evidence/$CASE.process.log
 cat svchost.pids.list >> $HOME/$CASE/evidence/$CASE.process.log
 #
 #
 # Work with the SVChost parent processes
-cat svchost.parent.full | sort -u  >> svchost.parent.list
 SVCPC=($(wc -l svchost.parent.list))
-echo "There ( is - are ) $SVCPC unique svchost parent processes"
-echo "There ( is - are ) $SVCPC unique svchost parent processes" >> $HOME/$CASE/evidence/$CASE.process.log
+echo "There ( is - are ) $SVCPC unique svchost parent process(es) "
+echo "There ( is - are ) $SVCPC unique svchost parent process(es) " >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.log; echo " ";
-#
 echo "Here ( is - are ) the svchost parent(s) processes.... ";
 cat svchost.parent; echo " "; echo " "; sleep 3;
+# the sleep is to give you time to read it.
+# Now for the log file again.
 echo "Here ( is - are ) the svchost parent(s) processes.... "; >> $HOME/$CASE/evidence/$CASE.process.log
 cat svchost.parent >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.log;
-echo " " >> $HOME/$CASE/evidence/$CASE.log;
 #
-######################################################################
-# SECTION 05
+#
+#
+#
+#
+##################################################################
+# SECTION 04
 #	Let's play with some processes
 # Let's dump some EXE's and play with them a bit.
-cd $HOME/$CASE/pdump; mkdir svchost;
+cd $HOME/$CASE/pdump; 
+mkdir svchost;
 while read r; do
 	$VOL -f $HOME/$CASE/$FILE --profile=$PRFL procdump -p $r -D svchost
 done < svchost.pids.list
 #
 cd svchost;
 for i in *.exe; do
+	# First hash the svchost files.
 	md5sum $i >> svchost.md5.full
+	sha1sum $i >> svchost.sha1.full
+	sha256sum $i >> svchosr.256.full
+	# Now run strings against each of the files.
+	# We can pull good information from them later.
+	strings -a -e l $i >> $i.strings
+	echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
+	echo " " >> $i.strings; echo " " >> $i.strings; echo " " >> $i.strings;
+	echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
+	strings -a -e b $i >> $i.strings
+        echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
+        echo " " >> $i.strings; echo " " >> $i.strings; echo " " >> $i.strings;
+        echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
+	strings -a $i >> $i.strings
 done
-cat svchost.md5.full | cut -c 1-32 | sort | uniq >> svchost.md5.list
-echo "Going to check these hashes online now. ";
+#
+#
+cat svchost.md5.full | cut -c 1-32 | sort -u >> svchost.md5.list
+cat svchost.sha1.full | cut -c 1-40 | sort -u >> svchost.sha1.list
+cat svchosr.256.full | cut -c 1-64 | sort -u >> svchosr.256.list
+#
+#
+cat svchost.md5.list >> $HOME/$CASE/evidence/$CASE.md5.list
+cat svchost.sha1.list >> $HOME/$CASE/evidence/$CASE.sha1.list
+cat svchosr.256.list >> $HOME/$CASE/evidence/$CASE.256.list
+#
+#
+mkdir vxv; mkdir te; mkdir th;
+echo "Going to check the MD5 hashes online now. ";
+echo "Going to check the MD5 hashes online now. " >>  $HOME/$CASE/evidence/$CASE.process.svchost.log;
 while read r; do
-	wget --header="$HEADER" --user-agent="$UA20" "http://vxvault.siri-urz.net/ViriList.php?MD5=$r" -O "$r.vxv.html"
-	wget --header="$HEADER" --user-agent="$UA20" "http://www.threatexpert.com/report.aspx?md5=$r" -O "$r.te.html"
-	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "$r.th.html"
+	echo "Check $r with VX Vault.....";
+	echo "Check $r with VX Vault....." >> $HOME/$CASE/evidence/$CASE.process.svchost.md5.html.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.md5.html.log;
+	wget --header="$HEADER" --user-agent="$UA20" "http://vxvault.siri-urz.net/ViriList.php?MD5=$r" -O "vxv/$r.vxv.html"
+	sleep 1;
+	echo "Check $r with Threat Expert.....";
+	echo "Check $r with Threat Expert....." >> $HOME/$CASE/evidence/$CASE.process.svchost.sha1.html.log;
+	wget --header="$HEADER" --user-agent="$UA20" "http://www.threatexpert.com/report.aspx?md5=$r" -O "te/$r.te.html"
+	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.sha1.html.log;
+	sleep 1;
+	echo "Check with Total Hash.....";
+	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.process.svchost.256.html.log;
+	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
+	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.256.html.log;
+	sleep 1;
 done < svchost.md5.list
 python $DSVT -k $APIK -f svchost.md5.list;
 #####
