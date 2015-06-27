@@ -78,44 +78,34 @@ echo " "
 #
 #
 # Hash the memory file
-echo "I am going to take some hashes of the memory now. ";
 echo "I am going to take some hashes of the memory now. " >> $HOME/$CASE/evidence/$CASE.process.log;
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
-echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
-echo "The file being analyzed is: $FILE ";
 echo "The file being analyzed is: $FILE" >> $HOME/$CASE/evidence/$CASE.process.log;
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
-echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
 #
 # MD5 hash first
 echo "I will first take an MD5 hash now";
 echo "I will first take an MD5 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
 md5sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
-echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log;
 #
 # Now time for the SHA1 hash.
 echo "I will take a SHA1 hash now";
 echo "I will take a SHA1 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 sha1sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
-echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log;
 #
 # Now time for the SHA256 hash.
 echo "I will take a SHA256 hash now";
 echo "I will take a SHA256 hash now" >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 sha256sum $HOME/$CASE/$FILE >> $HOME/$CASE/evidence/$CASE.process.log
-echo "------------------------------------------------------------"
 echo "------------------------------------------------------------" >> $HOME/$CASE/evidence/$CASE.process.log
-echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
+echo " " >> $HOME/$CASE/evidence/$CASE.process.log; 
 #
 echo "Here are the hashes from the process module run: " >> $HOME/$CASE/evidence/memory.hash.list
 cat $HOME/$CASE/evidence/$CASE.process.log >> $HOME/$CASE/evidence/memory.hash.list
