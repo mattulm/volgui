@@ -187,15 +187,15 @@ cat chrome.pids.list >> $HOME/$CASE/evidence/$CASE.chrome.log
 #
 # Work with the SVChost parent chromees
 ChromePPIDs=($(wc -l chrome.parent.list))
-echo "There were $ChromePPIDs unique chrome parent chrome(es) "
-echo "There were $ChromePPIDs unique chrome parent chrome(es) " >> $HOME/$CASE/evidence/$CASE.chrome.log
+echo "There were $ChromePPIDs unique chrome parent process(es) "
+echo "There were $ChromePPIDs unique chrome parent process(es) " >> $HOME/$CASE/evidence/$CASE.chrome.log
 echo " " >> $HOME/$CASE/evidence/$CASE.log; echo " ";
-echo "Here ( is - are ) the chrome parent(s) chromees.... ";
-cat chrome.parent; echo " "; echo " "; sleep 3;
+echo "Here ( is - are ) the chrome parent(s) processes.... ";
+cat chrome.parent.list; echo " "; echo " "; sleep 3;
 # the sleep is to give you time to read it.
 # Now for the log file again.
-echo "Here ( is - are ) the chrome parent(s) chromees.... "; >> $HOME/$CASE/evidence/$CASE.chrome.log
-cat chrome.parent >> $HOME/$CASE/evidence/$CASE.chrome.log
+echo "Here ( is - are ) the chrome parent(s) processes.... "; >> $HOME/$CASE/evidence/$CASE.chrome.log
+cat chrome.parent.list >> $HOME/$CASE/evidence/$CASE.chrome.log
 #
 #
 cd $HOME/$CASE/pdump; 

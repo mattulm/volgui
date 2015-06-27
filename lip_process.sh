@@ -162,7 +162,7 @@ echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " "; echo " ";
 cd $HOME/$CASE
 #
 # Set an array and loop please.
-process=( pslist psxview pstree psscan )
+process=( pslist psscan )
 for i in "${process[@]}"; do
 	if [ ! -f "text/$i.txt" ]; then
 		echo "$i module has been run at $(date), against the memory file."
@@ -189,9 +189,9 @@ cat pslist.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.list.workin
 cat psscan.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
 cat psscan.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.list.working
 cat svchost.pids.list.working | sort -u >> svchost.pids.list
-cat svchost.parent.lists.working | sort -u >> svchost.parent.list
+cat svchost.parent.list.working | sort -u >> svchost.parent.list
 rm -rf svchost.pids.list.working 
-rm -rf svchost.parent.lists.working
+rm -rf svchost.parent.list.working
 #
 # Let's print information about the svchost processes found.
 SVCHC=($(wc -l svchost.pids.list))
@@ -212,11 +212,11 @@ echo "There ( is - are ) $SVCPC unique svchost parent process(es) "
 echo "There ( is - are ) $SVCPC unique svchost parent process(es) " >> $HOME/$CASE/evidence/$CASE.process.log
 echo " " >> $HOME/$CASE/evidence/$CASE.log; echo " ";
 echo "Here ( is - are ) the svchost parent(s) processes.... ";
-cat svchost.parent; echo " "; echo " "; sleep 3;
+cat svchost.parent.list; echo " "; echo " "; sleep 3;
 # the sleep is to give you time to read it.
 # Now for the log file again.
 echo "Here ( is - are ) the svchost parent(s) processes.... "; >> $HOME/$CASE/evidence/$CASE.process.log
-cat svchost.parent >> $HOME/$CASE/evidence/$CASE.process.log
+cat svchost.parent.list >> $HOME/$CASE/evidence/$CASE.process.log
 #
 #
 cd $HOME/$CASE/pdump; 
@@ -321,18 +321,14 @@ for i in *.exe; do
 done
 #
 #
-#
-#
-#
 ##########################################################
-#
 # SECTION 04
+# Finishing up.
 
-
-# Run pstree to get some command lines
+# Run a couple more process things to get some last bits of information.
 cd $HOME/$CASE
 $VOL -f $FILE --profile=$PRFL pstree -v >> text/pstree.verbose.txt
-
+$VOL -f $FILE --profile=$PRFL psxview >> text/psxview.txt
 
 
 #
