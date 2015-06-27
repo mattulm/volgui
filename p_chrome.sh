@@ -231,26 +231,29 @@ cat chrome.256.full >> $HOME/$CASE/evidence/$CASE.256.full;
 # Thes are for the MD5 hashes.
 mkdir vxv te th mdb;
 echo "Going to check the MD5 hashes online now. ";
-echo "Going to check the MD5 hashes online now. " >>  $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+echo "Going to check the MD5 hashes online now. " >>  $HOME/$CASE/evidence/$CASE.chrome.log;
 while read r; do
 	# trying to keep the timing around to 20 seconds for a hash.
 	sleep 1;
 	echo "Check $r with VX Vault.....";
-	echo "Check $r with VX Vault....." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.md5.html.log;
+	echo "Check $r with VX Vault....." >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.md5.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://vxvault.siri-urz.net/ViriList.php?MD5=$r" -O "vxv/$r.vxv.html"
 	sleep 5;
 	echo "Check $r with Threat Expert.....";
-	echo "Check $r with Threat Expert....." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo "Check $r with Threat Expert....." >> $HOME/$CASE/evidence/$CASE.chrome.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://www.threatexpert.com/report.aspx?md5=$r" -O "te/$r.te.html"
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.sha1.html.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.md5.log;
 	sleep 4;
 	echo "Check with Total Hash.....";
-	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.chrome.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.256.html.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.md5.log;
 	sleep 5;
+	echo "Check with Malware DB ......";
+	echo "Check with Malware DB ......" >> $HOME/$CASE/evidence/$CASE.chrome.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://malwaredb.malekal.com/index.php?hash=$r" -O "mdb/$r.mdb.html"
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.md5.log;
 done < chrome.md5.list
 python $DSVT -k $APIK -f chrome.md5.list;
 #
@@ -259,10 +262,10 @@ python $DSVT -k $APIK -f chrome.md5.list;
 # For VT we are going to go a bit slower on these files.
 mkdir vt_256;
 echo "Going to check the SHA 256 hashes super quick.";
-echo "Going to check the SHA 256 hashes super quick." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+echo "Going to check the SHA 256 hashes super quick." >> $HOME/$CASE/evidence/$CASE.chrome.log;
 while read r; do
 	echo "Check $r with Virus Total ......";
-	echo "Check $r with Virus Total ......" >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo "Check $r with Virus Total ......" >> $HOME/$CASE/evidence/$CASE.chrome.log;
 	wget --header="$HEADER" --user-agent="UA20" "https://www.virustotal.com/en/file/$variable/analysis/" -O "vt_256/$r.vt_256.html"
 	sleep 20;
 done < chrome.256.list;
@@ -274,24 +277,24 @@ done < chrome.256.list;
 # Need to include some file parsing here so we can remove hashes that have no hits.
 # Also should look at including the other hash sets.
 ssdeep -b -a -p *.exe >> $HOME/$CASE/pdump/chrome/ssdeep.chrome.log;
-cat $HOME/$CASE/pdump/chrome/ssdeep.chrome.log >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+cat $HOME/$CASE/pdump/chrome/ssdeep.chrome.log >> $HOME/$CASE/evidence/$CASE.chrome.log;
 cat $HOME/$CASE/pdump/chrome/ssdeep.chrome.log;
 echo " "; sleep 3; echo " ";
 #
 #
 for i in *.exe; do
-	echo "-----------------------------------" >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log
-	file $i >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	# /usr/local/bin/pescan $i >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo "-----------------------------------" >> $HOME/$CASE/evidence/$CASE.chrome.log
+	file $i >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	# /usr/local/bin/pescan $i >> $HOME/$CASE/evidence/$CASE.chrome.log;
 	# echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	echo "Adobe Malware CLassifier....." >> $HOME/$CASE/evidence/$CASE.chrome.schost.log;
-	python $ADMC -f $i -n 1 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	python $ADMC -f $i -n 2 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	python $ADMC -f $i -n 3 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	python $ADMC -f $i -n 4 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-        python $ADMC -f $i >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo "Adobe Malware CLassifier....." >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	python $ADMC -f $i -n 1 >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	python $ADMC -f $i -n 2 >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	python $ADMC -f $i -n 3 >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	python $ADMC -f $i -n 4 >> $HOME/$CASE/evidence/$CASE.chrome.log;
+        python $ADMC -f $i >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log;
 	strings -a -e l $i >> $i.strings
 	echo "----------" >> $i.strings; echo "----------" >> $i.strings;
 	strings -a -e b $i >> $i.strings;
@@ -309,9 +312,28 @@ done
 
 
 # Run pstree to get some command lines
-cd $HOME/$CASE
-$VOL -f $FILE --profile=$PRFL pstree -v >> text/pstree.verbose.txt
 
+ 
+
+
+
+
+
+ChromeStuff=( chromecookies chromedownloadchains chromedownloads chromehistory chromevisits chromesearchterms )
+for i in "${ChromeStuff[@]}"; do
+	if [ ! -f "$HOME/$CASE/pdump/chrome/$i.txt" ]; then
+		echo "$i module has been run at $(date), against the memory file."
+        echo "$i module has been run at $(date), against the memory file." >> $HOME/$CASE/evidence/$CASE.chrome.log
+		echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo "";
+		$VOL -f $FILE --profile=$PRFL $i > text/$i.txt
+		echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo " ";
+		sleep 1;
+	else 
+		echo "It looks as if the $i module has already been run."
+		echo "I am skipping this step for now. "
+		sleep 1; echo " ";
+	fi
+done
 
 
 #
