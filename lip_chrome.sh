@@ -23,7 +23,7 @@ FTIME="$(date)"
 # 
 echo "This particular script will look at the chromees found within the memory file. "
 echo "First we will pull the chrome list after hashing the memory image "
-echo "Then I will dump the svchost chromees, and compare those to each other. "
+echo "Then I will dump the chrome chromees, and compare those to each other. "
 echo " "
 echo " "
 #
@@ -157,89 +157,72 @@ echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo " "; echo " ";
 # First move into our CASE directory
 cd $HOME/$CASE
 #
-# Set an array and loop please.
-chrome=( pslist psxview pstree psscan )
-for i in "${chrome[@]}"; do
-	if [ ! -f "text/$i.txt" ]; then
-		echo "$i module has been run at $(date), against the memory file."
-                echo "$i module has been run at $(date), against the memory file." >> $HOME/$CASE/evidence/$CASE.chrome.log
-		echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo "";
-		$VOL -f $FILE --profile=$PRFL $i > text/$i.txt
-		echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo " ";
-		sleep 1;
-	else 
-		echo "It looks as if the $i module has already been run."
-		echo "I am skipping this step for now. "
-		sleep 1; echo " ";
-	fi
-done
-echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo " ";
 #
 ####################################################################
 # SECTION 03
-#	Let's do First start by looking at our svchost chrome.
+#	Let's do First start by looking at our chrome chrome.
 #
 cd $HOME/$CASE/text;
-cat pslist.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
-cat pslist.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.list.working
-cat psscan.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
-cat psscan.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.list.working
-cat svchost.pids.list.working | sort -u >> svchost.pids.list
-cat svchost.parent.lists.working | sort -u >> svchost.parent.list
-rm -rf svchost.pids.list.working 
-rm -rf svchost.parent.lists.working
+cat pslist.txt | grep chrome | awk '{ print $3 }' >> chrome.pids.list.working
+cat pslist.txt | grep chrome | awk '{ print $4 }' >> chrome.parent.list.working
+cat psscan.txt | grep chrome | awk '{ print $3 }' >> chrome.pids.list.working
+cat psscan.txt | grep chrome | awk '{ print $4 }' >> chrome.parent.list.working
+cat chrome.pids.list.working | sort -u >> chrome.pids.list
+cat chrome.parent.lists.working | sort -u >> chrome.parent.list
+rm -rf chrome.pids.list.working 
+rm -rf chrome.parent.lists.working
 #
-# Let's print information about the svchost chromees found.
-SVCHC=($(wc -l svchost.pids.list))
-echo "There ( is - are ) $SVCHC svchost chrome(es) discovered within RAM."
-echo "There ( is - are ) $SVCHC svchost chrome(es) discovered within RAM." >> $HOME/$CASE/evidence/$CASE.chrome.log
+# Let's print information about the chrome chromees found.
+SVCHC=($(wc -l chrome.pids.list))
+echo "There ( is - are ) $SVCHC chrome chrome(es) discovered within RAM."
+echo "There ( is - are ) $SVCHC chrome chrome(es) discovered within RAM." >> $HOME/$CASE/evidence/$CASE.chrome.log
 echo " " >> $HOME/$CASE/evidence/$CASE.chrome.log; echo " ";
-echo "Here ( is - are ) all of the svchost PIDs ";
-cat svchost.pids.list; echo " "; sleep 3;   
+echo "Here ( is - are ) all of the chrome PIDs ";
+cat chrome.pids.list; echo " "; sleep 3;   
 # The sleep is to give you some time to read it.
 # Now to the log file.
-echo "Here ( is - are ) all of the svchost PIDSs " >> $HOME/$CASE/evidence/$CASE.chrome.log
-cat svchost.pids.list >> $HOME/$CASE/evidence/$CASE.chrome.log
+echo "Here ( is - are ) all of the chrome PIDSs " >> $HOME/$CASE/evidence/$CASE.chrome.log
+cat chrome.pids.list >> $HOME/$CASE/evidence/$CASE.chrome.log
 #
 #
 # Work with the SVChost parent chromees
-SVCPC=($(wc -l svchost.parent.list))
-echo "There ( is - are ) $SVCPC unique svchost parent chrome(es) "
-echo "There ( is - are ) $SVCPC unique svchost parent chrome(es) " >> $HOME/$CASE/evidence/$CASE.chrome.log
+SVCPC=($(wc -l chrome.parent.list))
+echo "There ( is - are ) $SVCPC unique chrome parent chrome(es) "
+echo "There ( is - are ) $SVCPC unique chrome parent chrome(es) " >> $HOME/$CASE/evidence/$CASE.chrome.log
 echo " " >> $HOME/$CASE/evidence/$CASE.log; echo " ";
-echo "Here ( is - are ) the svchost parent(s) chromees.... ";
-cat svchost.parent; echo " "; echo " "; sleep 3;
+echo "Here ( is - are ) the chrome parent(s) chromees.... ";
+cat chrome.parent; echo " "; echo " "; sleep 3;
 # the sleep is to give you time to read it.
 # Now for the log file again.
-echo "Here ( is - are ) the svchost parent(s) chromees.... "; >> $HOME/$CASE/evidence/$CASE.chrome.log
-cat svchost.parent >> $HOME/$CASE/evidence/$CASE.chrome.log
+echo "Here ( is - are ) the chrome parent(s) chromees.... "; >> $HOME/$CASE/evidence/$CASE.chrome.log
+cat chrome.parent >> $HOME/$CASE/evidence/$CASE.chrome.log
 #
 #
 cd $HOME/$CASE/pdump; 
-mkdir svchost;
+mkdir chrome;
 while read r; do
-	$VOL -f $HOME/$CASE/$FILE --profile=$PRFL procdump -p $r -D svchost
-done < svchost.pids.list
+	$VOL -f $HOME/$CASE/$FILE --profile=$PRFL procdump -p $r -D chrome
+done < chrome.pids.list
 #
-cd svchost;
+cd chrome;
 for i in *.exe; do
-	md5sum $i >> svchost.md5.full
-	sha1sum $i >> svchost.sha1.full
+	md5sum $i >> chrome.md5.full
+	sha1sum $i >> chrome.sha1.full
 	sha256sum $i >> svchosr.256.full
 done
 #
 #
-cat svchost.md5.full | cut -c 1-32 | sort -u >> svchost.md5.list
-cat svchost.sha1.full | cut -c 1-40 | sort -u >> svchost.sha1.list
-cat svchost.256.full | cut -c 1-64 | sort -u >> svchost.256.list
+cat chrome.md5.full | cut -c 1-32 | sort -u >> chrome.md5.list
+cat chrome.sha1.full | cut -c 1-40 | sort -u >> chrome.sha1.list
+cat chrome.256.full | cut -c 1-64 | sort -u >> chrome.256.list
 #
 #
-cat svchost.md5.list >> $HOME/$CASE/evidence/$CASE.md5.list;
-cat svchost.md5.full >> $HOME/$CASE/evidence/$CASE.md5.full;
-cat svchost.sha1.list >> $HOME/$CASE/evidence/$CASE.sha1.list;
-cat svchost.sha1.full >> $HOME/$CASE/evidence/$CASE.sha1.full;
-cat svchost.256.list >> $HOME/$CASE/evidence/$CASE.256.list;
-cat svchost.256.full >> $HOME/$CASE/evidence/$CASE.256.full;
+cat chrome.md5.list >> $HOME/$CASE/evidence/$CASE.md5.list;
+cat chrome.md5.full >> $HOME/$CASE/evidence/$CASE.md5.full;
+cat chrome.sha1.list >> $HOME/$CASE/evidence/$CASE.sha1.list;
+cat chrome.sha1.full >> $HOME/$CASE/evidence/$CASE.sha1.full;
+cat chrome.256.list >> $HOME/$CASE/evidence/$CASE.256.list;
+cat chrome.256.full >> $HOME/$CASE/evidence/$CASE.256.full;
 #
 #
 # Let's do some stuff online now.
@@ -248,41 +231,41 @@ cat svchost.256.full >> $HOME/$CASE/evidence/$CASE.256.full;
 # Thes are for the MD5 hashes.
 mkdir vxv te th mdb;
 echo "Going to check the MD5 hashes online now. ";
-echo "Going to check the MD5 hashes online now. " >>  $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
+echo "Going to check the MD5 hashes online now. " >>  $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
 while read r; do
 	# trying to keep the timing around to 20 seconds for a hash.
 	sleep 1;
 	echo "Check $r with VX Vault.....";
-	echo "Check $r with VX Vault....." >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.svchost.md5.html.log;
+	echo "Check $r with VX Vault....." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.md5.html.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://vxvault.siri-urz.net/ViriList.php?MD5=$r" -O "vxv/$r.vxv.html"
 	sleep 5;
 	echo "Check $r with Threat Expert.....";
-	echo "Check $r with Threat Expert....." >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
+	echo "Check $r with Threat Expert....." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://www.threatexpert.com/report.aspx?md5=$r" -O "te/$r.te.html"
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.svchost.sha1.html.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.sha1.html.log;
 	sleep 4;
 	echo "Check with Total Hash.....";
-	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
+	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.svchost.256.html.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.256.html.log;
 	sleep 5;
 	wget --header="$HEADER" --user-agent="$UA20" "http://malwaredb.malekal.com/index.php?hash=$r" -O "mdb/$r.mdb.html"
-done < svchost.md5.list
-python $DSVT -k $APIK -f svchost.md5.list;
+done < chrome.md5.list
+python $DSVT -k $APIK -f chrome.md5.list;
 #
 #
 # Let's look through some of the SHA 256 hashes now. 
 # For VT we are going to go a bit slower on these files.
 mkdir vt_256;
 echo "Going to check the SHA 256 hashes super quick.";
-echo "Going to check the SHA 256 hashes super quick." >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
+echo "Going to check the SHA 256 hashes super quick." >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
 while read r; do
 	echo "Check $r with Virus Total ......";
-	echo "Check $r with Virus Total ......" >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
+	echo "Check $r with Virus Total ......" >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
 	wget --header="$HEADER" --user-agent="UA20" "https://www.virustotal.com/en/file/$variable/analysis/" -O "vt_256/$r.vt_256.html"
 	sleep 20;
-done < svchost.256.list;
+done < chrome.256.list;
 #
 
 #
@@ -290,25 +273,25 @@ done < svchost.256.list;
 # TO DO:
 # Need to include some file parsing here so we can remove hashes that have no hits.
 # Also should look at including the other hash sets.
-ssdeep -b -a -p *.exe >> $HOME/$CASE/pdump/svchost/ssdeep.svchost.log;
-cat $HOME/$CASE/pdump/svchost/ssdeep.svchost.log >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-cat $HOME/$CASE/pdump/svchost/ssdeep.svchost.log;
+ssdeep -b -a -p *.exe >> $HOME/$CASE/pdump/chrome/ssdeep.chrome.log;
+cat $HOME/$CASE/pdump/chrome/ssdeep.chrome.log >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+cat $HOME/$CASE/pdump/chrome/ssdeep.chrome.log;
 echo " "; sleep 3; echo " ";
 #
 #
 for i in *.exe; do
-	echo "-----------------------------------" >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log
-	file $i >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	# /usr/local/bin/pescan $i >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	# echo " " >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
+	echo "-----------------------------------" >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log
+	file $i >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	# /usr/local/bin/pescan $i >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	# echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
 	echo "Adobe Malware CLassifier....." >> $HOME/$CASE/evidence/$CASE.chrome.schost.log;
-	python $ADMC -f $i -n 1 >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	python $ADMC -f $i -n 2 >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	python $ADMC -f $i -n 3 >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	python $ADMC -f $i -n 4 >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-        python $ADMC -f $i >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
-	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.svchost.log;
+	python $ADMC -f $i -n 1 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	python $ADMC -f $i -n 2 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	python $ADMC -f $i -n 3 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	python $ADMC -f $i -n 4 >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+        python $ADMC -f $i >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
+	echo " " >> $HOME/$CASE/evidence/$CASE.chrome.chrome.log;
 	strings -a -e l $i >> $i.strings
 	echo "----------" >> $i.strings; echo "----------" >> $i.strings;
 	strings -a -e b $i >> $i.strings;
