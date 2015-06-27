@@ -176,13 +176,13 @@ echo " " >> $HOME/$CASE/evidence/$CASE.process.log; echo " ";
 #
 ####################################################################
 # SECTION 03
-#	Let's do some calculations here.
-# Looking for svchost with this section.
+#	Let's do First start by looking at our svchost process.
+#
 cd $HOME/$CASE/text;
 cat pslist.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
-cat pslist.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.lists.working
+cat pslist.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.list.working
 cat psscan.txt | grep svchost | awk '{ print $3 }' >> svchost.pids.list.working
-cat psscan.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.lists.working
+cat psscan.txt | grep svchost | awk '{ print $4 }' >> svchost.parent.list.working
 cat svchost.pids.list.working | sort -u >> svchost.pids.list
 cat svchost.parent.lists.working | sort -u >> svchost.parent.list
 rm -rf svchost.pids.list.working 
@@ -214,13 +214,6 @@ echo "Here ( is - are ) the svchost parent(s) processes.... "; >> $HOME/$CASE/ev
 cat svchost.parent >> $HOME/$CASE/evidence/$CASE.process.log
 #
 #
-#
-#
-#
-##################################################################
-# SECTION 04
-#	Let's play with some processes
-# Let's dump some EXE's and play with them a bit.
 cd $HOME/$CASE/pdump; 
 mkdir svchost;
 while read r; do
@@ -229,62 +222,75 @@ done < svchost.pids.list
 #
 cd svchost;
 for i in *.exe; do
-	# First hash the svchost files.
 	md5sum $i >> svchost.md5.full
 	sha1sum $i >> svchost.sha1.full
 	sha256sum $i >> svchosr.256.full
-	# Now run strings against each of the files.
-	# We can pull good information from them later.
-	strings -a -e l $i >> $i.strings
-	echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
-	echo " " >> $i.strings; echo " " >> $i.strings; echo " " >> $i.strings;
-	echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
-	strings -a -e b $i >> $i.strings
-        echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
-        echo " " >> $i.strings; echo " " >> $i.strings; echo " " >> $i.strings;
-        echo " ----- " >> $i.strings; echo " ----- " >> $i.strings; echo " ----- " >> $i.strings;
-	strings -a $i >> $i.strings
 done
 #
 #
 cat svchost.md5.full | cut -c 1-32 | sort -u >> svchost.md5.list
 cat svchost.sha1.full | cut -c 1-40 | sort -u >> svchost.sha1.list
-cat svchosr.256.full | cut -c 1-64 | sort -u >> svchosr.256.list
+cat svchost.256.full | cut -c 1-64 | sort -u >> svchost.256.list
 #
 #
-cat svchost.md5.list >> $HOME/$CASE/evidence/$CASE.md5.list
-cat svchost.sha1.list >> $HOME/$CASE/evidence/$CASE.sha1.list
-cat svchosr.256.list >> $HOME/$CASE/evidence/$CASE.256.list
+cat svchost.md5.list >> $HOME/$CASE/evidence/$CASE.md5.list;
+cat svchost.md5.full >> $HOME/$CASE/evidence/$CASE.md5.full;
+cat svchost.sha1.list >> $HOME/$CASE/evidence/$CASE.sha1.list;
+cat svchost.sha1.full >> $HOME/$CASE/evidence/$CASE.sha1.full;
+cat svchost.256.list >> $HOME/$CASE/evidence/$CASE.256.list;
+cat svchost.256.full >> $HOME/$CASE/evidence/$CASE.256.full;
 #
 #
-mkdir vxv; mkdir te; mkdir th;
+# Let's do some stuff online now.
+# ## Will need to make some directories, and files and what not.
+#
+# Thes are for the MD5 hashes.
+mkdir vxv te th;
 echo "Going to check the MD5 hashes online now. ";
 echo "Going to check the MD5 hashes online now. " >>  $HOME/$CASE/evidence/$CASE.process.svchost.log;
 while read r; do
+	# trying to keep the timing around to 20 seconds for a hash.
+	sleep 1;
 	echo "Check $r with VX Vault.....";
-	echo "Check $r with VX Vault....." >> $HOME/$CASE/evidence/$CASE.process.svchost.md5.html.log;
+	echo "Check $r with VX Vault....." >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.md5.html.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://vxvault.siri-urz.net/ViriList.php?MD5=$r" -O "vxv/$r.vxv.html"
-	sleep 1;
+	sleep 6;
 	echo "Check $r with Threat Expert.....";
-	echo "Check $r with Threat Expert....." >> $HOME/$CASE/evidence/$CASE.process.svchost.sha1.html.log;
+	echo "Check $r with Threat Expert....." >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://www.threatexpert.com/report.aspx?md5=$r" -O "te/$r.te.html"
 	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.sha1.html.log;
-	sleep 1;
+	sleep 6;
 	echo "Check with Total Hash.....";
-	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.process.svchost.256.html.log;
+	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
 	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.256.html.log;
-	sleep 1;
+	sleep 6;
 done < svchost.md5.list
 python $DSVT -k $APIK -f svchost.md5.list;
-#####
+#
+#
+# Let's look through some of the SHA 256 hashes now. 
+# For VT we are going to go a bit slower on these files.
+mkdir vt_256;
+echo "Going to check the SHA 256 hashes super quick.";
+echo "Going to check the SHA 256 hashes super quick." >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+while read r; do
+	echo "Check $r with Virus Total ......";
+	echo "Check $r with Virus Total ......" >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+	wget --header="$HEADER" --user-agent="UA20" "https://www.virustotal.com/en/file/$variable/analysis/" -O "vt_256/$r.vt_256.html"
+	sleep 20;
+done < svchost.256.list;
+#
+
+#
+#
 # TO DO:
 # Need to include some file parsing here so we can remove hashes that have no hits.
-#
-#
-ssdeep -b -a -p *.exe >> $HOME/$CASE/evidence/$CASE.process.svchost.log
-cat $HOME/$CASE/evidence/$CASE.process.svchost.log;
+# Also should look at including the other hash sets.
+ssdeep -b -a -p *.exe >> $HOME/$CASE/pdump/svchost/ssdeep.svchost.log;
+cat $HOME/$CASE/pdump/svchost/ssdeep.svchost.log >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
+cat $HOME/$CASE/pdump/svchost/ssdeep.svchost.log;
 echo " "; sleep 3; echo " ";
 #
 #
@@ -308,6 +314,15 @@ for i in *.exe; do
 	strings -a $i >> $i.strings;
 done
 #
+#
+#
+#
+#
+##########################################################
+#
+# SECTION 04
+
+
 # Run pstree to get some command lines
 cd $HOME/$CASE
 $VOL -f $FILE --profile=$PRFL pstree -v >> text/pstree.verbose.txt
