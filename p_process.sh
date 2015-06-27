@@ -221,6 +221,7 @@ cat svchost.parent.list >> $HOME/$CASE/evidence/$CASE.process.log
 #
 cd $HOME/$CASE/pdump; 
 mkdir svchost;
+cp $HOME/$CASE/text/svchost.pids.list $HOME/$CASE/pdump
 while read r; do
 	$VOL -f $HOME/$CASE/$FILE --profile=$PRFL procdump -p $r -D svchost
 done < svchost.pids.list
@@ -305,7 +306,7 @@ for i in *.exe; do
 	file $i >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	# /usr/local/bin/pescan $i >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	# echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
-	echo "Adobe Malware CLassifier....." >> $HOME/$CASE/evidence/$CASE.process.schost.log;
+	echo "Adobe Malware Classifier....." >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	python $ADMC -f $i -n 1 >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	python $ADMC -f $i -n 2 >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
 	python $ADMC -f $i -n 3 >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
