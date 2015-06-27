@@ -269,7 +269,7 @@ while read r; do
 	sleep 4;
 	echo "Check with Total Hash.....";
 	echo "Check with Total Hash....." >> $HOME/$CASE/evidence/$CASE.process.svchost.log;
-	wget --header="$HEADER" --user-agent="$UA20" "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
+	wget --header="$HEADER" --user-agent="$UA20" --no-check-certificate "http://totalhash.com/search/hash:$r" -O "th/$r.th.html"
 	echo " " >> $HOME/$CASE/evidence/$CASE.process.svchost.256.html.log;
 	sleep 5;
 	wget --header="$HEADER" --user-agent="$UA20" "http://malwaredb.malekal.com/index.php?hash=$r" -O "mdb/$r.mdb.html"
