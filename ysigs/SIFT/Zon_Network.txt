@@ -1,0 +1,45 @@
+rule Zon_Network {
+	meta:
+		description = "ZON Networks protocol"
+		thread_level = 3
+		in_the_wild = true
+		authors = "Vectra"
+		date = "5-10-15"
+		
+	strings:
+		$s1 = "zconn_new"
+		$s2 = "zmsg_znatconnect_handler"
+		$s3 = "zmsg_upgrade"
+		$s4 = "zmsg_snd_rcv_handler"
+		$s5 = "zmsg_upgrade_peer"
+		$s6 = "zmsg_ts_long_cb"
+		$s7 = "zmsg_write" 
+		$s8 = "zmsg_http_write"
+		$s9 = "zmsg_http_read"
+		$s10 = "zmsg_write_handler"
+		$s11 = "zmsg_read" 
+		$s12 = "zmsg_read received" 
+		$s13 = "zmsg_read_handler"
+		$s14 = "zmsg_read_invalid"
+		$s15 = "zmsg_magic_write_handler"
+		$s16 = "zmsg_magic_read_handler"
+		$s17 = "zmsg_http_send_handler"
+		$s18 = "zmsg_zping_resp_handler"
+		$s19 = "zmsg_route_req_handler"
+		$s20 = "zmsg_route_get_next_hop_cb" 
+		$s21 = "zconn_son_free"
+		$s22 = "zconn_write_handler"
+		$s23 = "zconn_read_handler"
+		$s24 = "zconn_write"
+		$s25 = "zconn_read"
+		$s26 = "zconn_dns_fail"
+		$s27 = "zconn_http_handler"
+		$s28 = "zconn_local_handler"
+		$s29 = "zconn_handler"
+		$s30 = "zmsg_release"
+		$s31 = "zmsg_fail_connect"
+		$s32 = "zmsg_accumulate"
+		$s33 = "zconn_info"
+	condition:
+		10 of them
+}
